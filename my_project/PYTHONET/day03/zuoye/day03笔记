@@ -1,0 +1,27 @@
+前请回顾
+
+1.TCP传输的一些问题
+    *传输特征     PipeBroken
+    *网络缓冲区    协调收发速度
+    *粘包         
+2.UDP传输
+    服务端  创建套接字-->绑定地址-->发送接收-->关闭
+    客户端  创建套接字-->收发消息-->关闭
+3.套接字属性
+    fileno()
+    getpeername()  获取连接套接字客户端地址
+    setsockopt()
+4.广播
+5.http协议
+    *获取一个网页的过程
+    *http请求
+        请求行    GET    /    HTTP/1.1
+            类型: GET POST HEAD PUT DELETE
+        请求头
+        空行
+        请求体
+
+Http响应 (response)
+  响应格式
+    响应行: 反馈基本的响应情况
+      格式: HTTP/1.1  200  OK

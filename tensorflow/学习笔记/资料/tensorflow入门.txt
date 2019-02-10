@@ -1,0 +1,193 @@
+屏蔽log信息：
+import os
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] 取值 0 ： 0也是默认值，输出所有信息
+os.environ['TF_CPP_MIN_LOG_LEVEL'] 取值 1 ： 屏蔽通知信息
+os.environ['TF_CPP_MIN_LOG_LEVEL'] 取值 2 ： 屏蔽通知信息和警告信息
+os.environ['TF_CPP_MIN_LOG_LEVEL'] 取值 3 ： 屏蔽通知信息、警告信息和报错信息
+
+一、tensorflow的常用函数：
+import tensorflow as tf
+
+import numpy as np
+
+1.1、数据的呈现（Variable（）：定义变量）：
+
+    x=np.array([[1,1,1],[1,-8,1],[1,1,1]])
+
+    w=tf.Variable(initial_value=x)
+
+    w=tf.Variable(tf.zeros([3,3]))
+
+    init=tf.global_variables_initializer()
+
+    withtf.Session() as sess:
+
+           sess.run(init)
+
+           print(sess.run(w))
+
+1.2、数据的加减运算（add():加；multiply():乘）：
+
+    a=tf.placeholder(tf.int16)
+
+    b=tf.placeholder(tf.int16)
+
+    add=tf.add(a,b)
+
+    mul=tf.multiply(a,b)
+
+    withtf.Session() as sess:
+
+           print("a+b=", sess.run(add,feed_dict={a:2, b:3}))
+
+           print("a*b=", sess.run(mul,feed_dict={a:2, b:3}))
+
+1.3、矩阵相乘（matmul）运算：
+
+    a=tf.Variable(tf.ones([3,3]))
+
+    b=tf.Variable(tf.ones([3,3]))
+
+    product=tf.matmul(tf.multiply(5.0,a),tf.multiply(4.0,b))
+
+    init=tf.initialize_all_variables()
+
+    withtf.Session() as sess:
+
+           sess.run(init)
+
+           print(sess.run(product))
+
+1.4、argmax的练习：获取最大值的下标向量
+
+a=tf.get_variable(name='a',shape=[3,4],dtype=tf.float32,initializer=tf.random_uniform_initializer(minval=-1,maxval=1))
+
+    # 最大值所在的下标向量
+
+    b=tf.argmax(input=a,axis=0)
+
+    c=tf.argmax(input=a,dimension=1)
+
+    sess=tf.InteractiveSession()
+
+    sess.run(tf.initialize_all_variables())
+
+    print(sess.run(a))
+
+    print(sess.run(b))
+
+    print(sess.run(c))
+
+1.5、创建全一/全零矩阵：
+
+  tf.ones(shape,type=tf.float32,name=None)
+
+  tf.ones([2, 3], int32) ==> [[1, 1, 1], [1, 1, 1]]
+
+  tf.zeros(shape,type=tf.float32,name=None)
+
+  tf.zeros([2, 3], int32) ==> [[0, 0, 0],[0, 0, 0]]
+
+1.7、tf.ones_like(tensor,dype=None,name=None)
+
+  新建一个与给定的tensor类型大小一致的tensor，其所有元素为1。
+
+    # 'tensor' is [[1, 2, 3], [4, 5, 6]] 
+
+    tf.ones_like(tensor) ==> [[1, 1, 1], [1, 1, 1]]
+
+1.8、tf.zeros_like(tensor,dype=None,name=None)
+
+    新建一个与给定的tensor类型大小一致的tensor，其所有元素为0。
+
+    # 'tensor' is [[1, 2, 3], [4, 5, 6]] 
+
+    tf.ones_like(tensor) ==> [[0, 0, 0],[0, 0, 0]]
+
+1.9、tf.fill(dim,value,name=None)
+
+     创建一个形状大小为dim的tensor，其初始值为value
+
+    # Output tensor has shape [2, 3]. 
+
+    fill([2, 3], 9) ==> [[9, 9, 9] 
+
+                               [9, 9, 9]]
+
+1.10、tf.constant(value,dtype=None,shape=None,name='Const')
+
+    创建一个常量tensor，先给出value，可以设定其shape
+
+    # Constant 1-D Tensor populated with value list. 
+
+    tensor = tf.constant([1, 2, 3, 4, 5, 6, 7]) => [1 2 3 4 5 67] 
+
+     # Constant 2-D tensor populated with scalarvalue -1. 
+
+    tensor = tf.constant(-1.0, shape=[2, 3]) => [[-1. -1. -1.] [-1.-1. -1.]
+
+1.11、tf.linspace(start,stop,num,name=None)
+
+     返回一个tensor，该tensor中的数值在start到stop区间之间取等差数列（包含start和stop），如果num>1则差值为(stop-start)/(num-1)，以保证最后一个元素的值为stop。
+
+     其中，start和stop必须为tf.float32或tf.float64。num的类型为int。
+
+    tf.linspace(10.0, 12.0, 3, name="linspace") => [ 10.011.0 12.0]
+
+1.12、tf.range(start,limit=None,delta=1,name='range')
+
+     返回一个tensor等差数列，该tensor中的数值在start到limit之间，不包括limit，delta是等差数列的差值。
+
+     start，limit和delta都是int32类型。
+
+    # 'start' is 3 
+
+    # 'limit' is 18 
+
+    # 'delta' is 3
+
+    tf.range(start, limit, delta) ==> [3, 6, 9, 12, 15] 
+
+    # 'limit' is 5 start is 0
+
+    tf.range(start, limit) ==> [0, 1, 2, 3, 4]
+
+1.13、tf.random_normal(shape,mean=0.0,stddev=1.0,dtype=tf.float32,seed=None,name=None)
+
+    返回一个tensor其中的元素的值服从正态分布。
+
+    seed: A Python integer. Used to create a random seed for thedistribution.See set_random_seed forbehavior。
+
+1.14、tf.truncated_normal(shape, mean=0.0, stddev=1.0, dtype=tf.float32,seed=None, name=None)
+
+     返回一个tensor其中的元素服从截断正态分布（？概念不懂，留疑）
+
+1.15、tf.random_uniform(shape,minval=0,maxval=None,dtype=tf.float32,seed=None,name=None)
+
+     返回一个形状为shape的tensor，其中的元素服从minval和maxval之间的均匀分布。
+
+1.16、tf.random_shuffle(value,seed=None,name=None)
+
+    对value（是一个tensor）的第一维进行随机化。
+
+      [[1,2],               [[2,3],
+
+       [2,3],        ==>  [1,2],
+
+       [3,4]]                [3,4]] 
+
+1.17、tf.set_random_seed(seed)
+
+    设置产生随机数的种子。
+
+
+前言：名词解释
+tensor	张量，可以是一个数，也可以是一个向量、矩阵或者高纬度数据
+operator	操作，在tensorflow里面，函数也叫作操作
+Uni	一元，表示操作只有一个参数
+Bi	二元，表示操作有2个参数
+element-wise	元素级操作，表示该操作是对张量的每一个元素进行一一对应的操作，输出和输入的张量维度和元素个数保持不变
+variable	变量，表示可以微分和手动更新的参数，代表神经网络中可以训练的参数，比如weight和bias
+placeholder	占位符，如果把一整个神经网络看成一个未知的函数的话，占位符就相当于函数的输出
+rank	秩，数组的维度的维度，例如标量的rank=0, rank(vector)=1, rank(matrix)=2, rank([[[1],[1]],[[2],[2]]])=3,…,以此类推

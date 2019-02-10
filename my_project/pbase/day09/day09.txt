@@ -1,0 +1,504 @@
+day08回顾
+    两个容器类
+        set 集合(可变)
+            set() / set(iterable)
+            {1,2,3}
+            集合推导式 {x for x in range(10)}
+        frozenset 集合(不可变)
+            frozenset() / frozenset(iterable)
+    
+    集合和固定集合运算:
+       &  |  -  ^  <  >  
+       &=  |=  -=  ^=
+       ==  !=  <=  >=
+       in / not in
+    
+    函数:
+       len(x) ....
+    方法:
+        s.add(x) 添加
+        s.remove(x) 删除
+        s.discard(x) 删除
+        s.pop(x)  删除
+        s.clear(x)  清空
+        s.copy(x)  浅拷贝
+        s.update(s2)  
+        ...
+    
+    所有的容器类都是可迭代对象
+        list, str, tuple, dict, set, frozenset
+        bytes, bytearry
+    
+函数 function:
+    def 语句
+        作用:
+            封装语句块,把一些语句看成功能整体
+        语法:
+            def 函数名(形参列表)
+                语句块
+                return None
+    return 语句
+        作用:
+            结束当前函数的执行,返回到调用此函数的地方,同时返回一个对象的引用关系(默认返回None)
+        语句:
+            return [表达式]
+    函数调用:
+        函数名(实际调用传参)
+                              (1 +  2)分组子表达式
+                              (1, 2, 3)创建元组
+                              max() 调用函数
+                              (x for x in range(10))  生成器表达式
+
+day09笔记:
+python 函数参数的传递(把数据给函数):
+传递方式:
+    1.位置传参
+      序列传参
+    2.关键字传参
+      字典关键字传参 -->相同类型的传参可以换顺序
+
+位置传参:
+   实际参数(实参)与形式参数(形参)的对应关系,是按位置来依次对应的
+   示意:
+       def mymin(a, b, c):
+           pass
+        mymin(1, 2, 3)
+    说明:
+        实参和形参按位置进行匹配
+        实参的个数必须与形参个数相同
+    示例见:
+        position_give_args.py
+序列传参:
+    序列传参是指在函数调用过程中用(*)号将列表拆解后按位置传参
+    示例见:
+        sequence_give_args.py
+    说明:
+        序列传参时,序列拆解的位置与形参一一对应
+关键字传参:
+    是指传参时,按着形参的名称给形参赋值
+    实参和形参按名称进行匹配
+    示例:
+        keyword_give_args.py
+    说明:
+        实参和形参按名称进行匹配,可以不按位置进行匹配
+        实参中的关键字在形参中存在
+字典关键字传参:
+    是指实参是字典,将字典有两个星号(**)拆解后进行关键字传参的传递方式
+    示例见:
+        dict_keyword_give_args.py
+字典和列表的参数个数应该与形参的个数相同
+    说明:
+        1.字典的键名必须是符合标识符命名规则的字符串
+        2.字典的键名必须是符合标识符命名规则
+        
+函数的综合传参:
+    1.函数的传参方式,在形参能唯一匹配到相应的实参的情况下可以任意组合
+    2.函数的位置传参要先于关键字传参
+    示例:
+        def myfun1():
+            pass
+        myfun1(100, *[200, 300]) #正确
+        myfun1(*(100, 200), 300) #正确
+        myfun1(*[100], *'AB')    #正确
+        myfun1(*[100], 200, *[300]) #正确
+        myfun1(a=1, 2, c=5)  #错的
+        myfun1(1, c=2, b=5)  #正确
+        myfun1(c=3, **{'b':2, 'a':1}) #正确
+        myfun1(**{'b':2, 'a':1}, c=3) #正确
+        myfun1(a=1, 2, c=3)  #错的
+
+函数的参数传递过程
+    示例1:
+        a= 100
+        b= 200
+        def f1(x, y):
+            print(x + y)
+        f1(a, b)
+        f1(a, b) --> x = a, y = b
+        #实参给形参进行赋值传递,并不会复制新的对象:
+        #即x和a 同时引用100,y和b同时引用200
+
+可变的数据类型作为函数的参数传递
+    示例:
+        a = [1, 2, 3]
+        b = 4
+        def f2(x, y):sdds
+            x.append(y)
+        f2(a, b)
+        print(a)
+        print(b)
+        #[1, 2, 3, 4]
+        #4
+        f2(a, 300)
+        print(a)    #[1, 2, 3, 200, 300]
+    2:
+    a = [1, 2, 3]
+    b = 200
+    def f3(x, y):
+        x = x + [y]  
+        print(x)    #[1, 2, 3, 200]
+    f3(a, b)
+    print(a)  #[1, 2, 3]
+    print(b)  #200
+
+
+
+---------- 以下讲函数的定义部分(函数的形参)-------
+函数的缺省参数
+  语法:
+    def 函数名(形参名1=默认实参1, 形参名2=默认实参2,...):
+        语句块
+  示例见:
+    default_args.py
+  说明:
+    1. 缺省参数必须自右至左依次存在,如果一个参数有缺省参数,则
+      其右侧的所有参数都必须有缺省参数
+    def error_fn(a, b=10, c):  # <<<---这是错的
+        pass
+    2. 缺省参数可以有0个,1个或多个,甚至全部都有缺省参数
+    def fn(a=0, b=10, c=20):
+        pass
+
+练习:
+  写一个函数myadd, 此函数可以计算两个数,三个数,及四个数的和
+    def myadd(a=0, b=0, c=0, d=0):
+        return a + b + c + d
+    print(myadd(10, 20))  # 30
+    print(myadd(100, 200, 300))  # 600
+    print(myadd(1, 2, 3, 4))  # 10
+
+
+函数的形参的定义方式:
+  1.位置形参
+  2.星号元组形参
+  3.命名关键字形参
+  4.双星号字典形参
+
+  def (args, [,*args], [,**kwargs]):
+      pass
+
+位置形参
+  语法:
+    def 函数名(形参名1, 形参名2, ...):
+        语句块
+
+星号元组形参
+  语法:
+    def 函数名(*元组形参名):
+        语句块
+  作用:
+    收集多余的位置传参
+  说明:
+    在一个函数名的形参列表内只能有一个星号元组形参
+    元组形参名一般命名为 'args'
+  示例见:
+    star_tuple_args.py
+        
+
+练习:
+  写一个函数,mymax, 此函数可以传入任意个实参,返回实参中的
+  最大数
+  def mymax(...):
+      ....
+
+  print(mymax(4, 6, 9, 3))  # 9
+  print(mymax("ABC", "abc", '123'))  # abc
+  print(mymax(1,2,3,4,5,6,7,8,9))  # 9
+
+
+练习:
+  写一个函数mysum 可以传入任意个实参的数字,返回所有实参的和
+    def mysum(*args):
+       ....
+    print(mysum())  # 0
+    print(mysum(1, 2, 3, 4))  # 10
+    要求: 不允许调用内建函数sum
+
+def mysum(*args):
+    sum = 0
+    for i in args:
+        sum = i + sum
+    return sum
+print(mysum())  # 0
+print(mysum(1, 2, 3, 4))  # 10
+
+def sum(*iterable, start=0):
+    for x in iterable:
+        start += x
+    return start
+
+命名关键字形参
+  语法:
+    def 函数名(*, 命名关键字形参1, 命名关键字形参2, ...):
+        语句块
+    或
+    def 函数名(*args, 命名关键字形参1, 命名关键字形参2, ...):
+        语句块
+  作用:
+    强制所有的实参都必须用关键字传参或字典关键字传参
+  示例见:
+    named_keyword_args.py
+    named_keyword_args2.py
+
+
+双星号字典形参
+  语法:
+    def 函数名(**字典形参名):
+        语句块
+  作用:
+    收集多余的关键字传参
+  说明:
+    字典形参名一般命名为'kwargs'
+    一个函数内字典形参最多只能有一个
+  示例见:
+    kwargs.py
+
+说明:
+  位置形参,缺省参数,星号元组形参,双星号字典形参可以混合使用
+示例:
+    def fn(a, b, *args, c, **kwargs):
+        print(a, b, *args, c, **kwargs)
+    fn(100, 200, 300, 400, c=1, d=2, e=3)
+    #100 200 (300, 400) 1 {'e': 3, 'd': 2}
+
+
+练习:
+  已知内建函数max帮助方档为:
+    max(iterable)
+    max(arg1, arg2, *args)
+  仿造max, 写一个mymax函数,功能与max完全相同
+  (要求不允许调用max函数)
+    print(mymax([6, 8, 3, 5]))  # 8
+    print(mymax(100, 200))  # 200
+    print(mymax(1, 3, 9, 5, 7))  # 9
+
+def fx(*args):
+    #判断实参是可迭代对象,还是多个数据
+    if len(args) == 1:
+        iterable = args[0]
+        max = iterable[0]
+        for i in iterable:
+            if i > iterable[0]:
+                max = i
+        return max
+    if len(args) > 1:
+        max = args[0]
+        for i in args:
+            if i > args[0]:
+                max = i
+        return max
+print(fx([1,2,4]))
+print(fx(1,2,3,4,100))
+
+def mymax(a, *args):
+    if len(args) == 0:
+        max = a[0]
+        for i in a:
+            if i > a[0]:
+                max = i
+        return max
+    elif len(args) > 0:
+        max = a
+        for i in args:
+            if i > a:
+                max = i
+        return max
+print(mymax([1,2,3,5]))
+
+def mymax(a, *args):
+    if len(args) == 0:
+        return max(a)
+    elif len(args) >1:
+        return max(a,max(args))
+        #return max(a, *args)  把args拆开并按位置传参
+
+
+可以接收任意位置的位置传参和关键字传参的形参列表:
+    def fn(*args, **kwargs):
+        print(args, kwargs)
+
+函数参数自左至右的顺序为:
+  位置形参
+  星号元组形参
+  命名关键字形参
+  双星号字典形参
+
+可以接收任意的位置传参和关键字传参的函数定义
+  def fx(*args, **kwargs):
+       pass
+
+
+
+
+
+
+
+
+
+
+思考题:
+  查看 >>> help(print)  猜想print 函数的参数列表是如何
+  定义的,能否自己实现一个myprint函数,代替print
+      (内都可以调用print来进行输出)
+  myprint / print(1,2,3,4)
+  myprint / print(1,2,3,4, sep="#")
+  myprint / print(1, 2, 3, 4, 5, end=' ')
+
+
+
+
+
+
+
+
+
+
+全局变量 global 和局部变量 local
+局部变量 local variable
+  定义在函数内部的变量称为局部变量(函数的形参也是局部变量)
+  局部变量只能在函数内部使用
+  局部变量在函数调用时才能够被创建,在函数调用之后会自动销毁
+
+全局变量 global variable
+  定义在函数外部,模块内部的变量称为全局变量
+  全局变量,所有的函数都可以直接访问(取值,但函数内不能将其直接赋值)
+示例见:
+   global_and_local.py
+
+  
+
+
+练习:
+    1.写一个函数isprime(x)  判断x是否为素数,如果是素数
+       返回True,否则返回False
+       如:
+        print(isprime(3))  # True
+        print(isprime(4))  # False
+
+def isprime(number):
+    if number <= 1:
+        return print("请输入大于等于2的正整数!")
+    elif number >= 2:
+        for n in range(2, number):
+            if number % n == 0:
+                return False
+        return True
+
+    2.写一个函数prime_m2n(m, n)  返回从m开始,到n结束
+       范围内的素数,返回这些素数的列表,并打印(注:不包含n)
+       如:
+        L = prime_m2n(10, 20)
+        print(L)  # [11, 13, 17, 19]
+
+def prime_m2n(m, n):
+    for i in range(m, n):
+        if isprime(i) == True:
+            L.append(i)
+    print(L)
+
+return [x for x in range(m, n) if isprime(x)]
+
+    3.写一个函数 primes(n) 返回指定范围内的全部素数(不包
+       含n)的列表
+       如:
+       L = primes(10)
+       print(L)  # [2, 3, 5, 7]
+       1> 计算100以内的全部素数的和
+       2> 计算100~200之间全部素数的和
+
+def primes(n):
+    return prime_m2n(0, n)
+#number = int(input("请输入一个正整数:"))
+# start = int(input("请输入开始的数:"))
+# end = int(input("请输入结束的数:"))
+print(sum(primes(100)))
+print(sum(prime_m2n(100, 200)))
+
+    4.改写之前的学生信息管理程序,将程序改为两个函数:
+       def input_student():
+          ...   #此函数用于获取学生信息,形成包含有字典的列表
+          然后返回此列表 
+       def output_student(L):
+          ...  #此函数以列格的形式打印学生信息的列表
+
+        测试()
+           infos = input_student()
+           print(infos)
+           output_student(infos)
+
+def main():
+    while True:
+        print("1) 添加同学")
+        print("2) 删除同学")
+        print("3) 修改同学")
+        print("4) 显示同学")
+        print("5) 退出")
+        tip = input("请输入操作序号:")
+        if tip == "1":
+            input_student()
+        elif tip == "2":
+            pass
+        elif tip == "3":
+            pass
+        elif tip == "4":
+            output_student(infos)
+        elif tip == "5":
+            break
+
+def input_student():
+    while True:
+        name = input("请输入学生姓名:")
+        if len(name) == 0:
+            break
+        age = input("请输入学生年龄:")
+        score = input("请输入学生成绩:")
+        STUDENTS = {'name':name, 'age':age, 'score':score}
+        infos.append(STUDENTS)
+    return infos
+
+def output_student(L):
+    print("+----------+----------+----------+")
+    print("|   name   |    age   |   score  |")
+    print("+----------+----------+----------+")
+    for d in L:
+        n = d['name']
+        a = d['age']
+        s = d['score']
+        print("|%s|%s|%s|" %(n.center(10),
+                            a.center(10),
+                            s.center(10)))
+    print("+----------+----------+----------+")
+
+if __name__ == '__main__':
+    infos = []
+    main()
+
+
+
+
+
+
+
+
+
+  2.  写一个myrange函数,参数可以传1~3个,实际含义与range函数相同
+     此函数返回符合range() 函数规则的列表:
+       如:
+        L = myrange(4)
+        print(L)  # [0, 1, 2, 3]
+        L = myrange(4, 6)
+        print(L)  # [4, 5]
+        L = myrange(1, 10, 3)
+        print(L)  # [1, 4, 7]
+        L = myrange(10, 0, -3)
+        print(L)  # [10, 7, 4, 1]
+  3. 思考下面程序的结果是什么?为什么?
+    def f1():
+        print("f1")
+    def f2():
+        print("f2")
+    f3 = f1
+    f3()  # 请问打印什么?为什么
+    f1, f2 = f2, f1
+    f1()  # ???
+    f2()  # 打印什么?为什么?

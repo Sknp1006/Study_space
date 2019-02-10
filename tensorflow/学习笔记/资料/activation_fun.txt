@@ -1,0 +1,338 @@
+激活函数概念
+From TensorFlow - Activation_Functions：
+
+在神经网络中，我们有很多的 非线性函数 来作为 激活函数
+
+连续 、平滑
+tf.sigmoid(x, name = None)
+== 1 / (1 + exp(-x))
+
+import numpy as np
+import tensorflow as tf
+
+sess = tf.Session()
+bn = np.random.normal(0, 5, [3, 5])
+
+print bn.shape, type(bn), ':'
+print bn
+print
+output = tf.nn.sigmoid(bn)
+print output.shape, type(output), ':'
+print sess.run(output)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+(3, 5) <type 'numpy.ndarray'> :
+[[ 2.42429203 -1.89521415  4.52536321  2.02200042 -0.46109594]
+ [-5.37984794  3.82258344  3.05039891  5.35911657  4.04462726]
+ [-3.79266918 -7.12570837  1.74167827 -0.85649631 -3.77669239]]
+
+(3, 5) <class 'tensorflow.python.framework.ops.Tensor'> :
+[[  9.18661034e-01   1.30651098e-01   9.89285269e-01   8.83087698e-01
+    3.86725869e-01]
+ [  4.58738158e-03   9.78596887e-01   9.54799746e-01   9.95316973e-01
+    9.82785304e-01]
+ [  2.20387197e-02   8.03517003e-04   8.50900112e-01   2.98071887e-01
+    2.23857102e-02]]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+
+
+tf.tanh(x, name = None)
+== ( exp(x) - exp(-x) ) / ( exp(x) + exp(-x) )
+
+import numpy as np
+import tensorflow as tf
+
+sess = tf.Session()
+bn = np.random.normal(0, 5, [3, 5])
+
+print bn.shape, type(bn), ':'
+print bn
+print
+output = tf.nn.tanh(bn)
+print output.shape, type(output), ':'
+print sess.run(output)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+(3, 5) <type 'numpy.ndarray'> :
+[[-1.43756487 -0.82183219  2.83650212 -0.86855883 -2.54894335]
+ [ 2.3639829  -5.23813843  6.94823124 -6.59737671  3.62198313]
+ [ 9.15073151  2.82883771 -4.40860502 -5.96409016 -2.74915937]]
+
+(3, 5) <class 'tensorflow.python.framework.ops.Tensor'> :
+[[-0.89320646 -0.67606587  0.99314851 -0.70064117 -0.98785491]
+ [ 0.98246619 -0.99994361  0.99999816 -0.99999628  0.99857208]
+ [ 0.99999998  0.99304304 -0.99970372 -0.9999868  -0.99184608]]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+tf.nn.softplus(features, name = None)
+== log ( exp( features ) + 1)
+
+import numpy as np
+import tensorflow as tf
+
+sess = tf.Session()
+bn = np.random.normal(0, 5, [3, 5])
+
+print bn.shape, type(bn), ':'
+print bn
+print
+output = tf.nn.softplus(bn)
+print output.shape, type(output), ':'
+print sess.run(output)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+(3, 5) <type 'numpy.ndarray'> :
+[[ 2.3897838  -9.86605463 -7.58004249 -4.38702367 -1.44367065]
+ [ 7.52588384  6.49497224 -4.37733996 -0.68677868 -2.12110005]
+ [-6.35464811 -1.70150615  6.51252343 -0.12833586  4.36898049]]
+
+(3, 5) <class 'tensorflow.python.framework.ops.Tensor'> :
+[[  2.47747365e+00   5.19057707e-05   5.10409248e-04   1.23609802e-02
+    2.11928637e-01]
+ [  7.52642265e+00   6.49648212e+00   1.24805143e-02   4.07592450e-01
+    1.13239092e-01]
+ [  1.73713721e-03   1.67553530e-01   6.51400705e+00   6.31036601e-01
+    4.38156511e+00]]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+
+
+连续、不平滑
+tf.nn.relu(features, name = None)
+== max (features, 0)
+
+import numpy as np
+import tensorflow as tf
+
+sess = tf.Session()
+bn = np.random.normal(0, 5, [3, 5])
+
+print bn.shape, type(bn), ':'
+print bn
+print
+output = tf.nn.relu(bn)
+print output.shape, type(output), ':'
+print sess.run(output)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+(3, 5) <type 'numpy.ndarray'> :
+[[ 4.34288636 -3.14906286 -5.21796011 -2.77006242 -4.92871322]
+ [ 9.07049557 -9.64290379 -5.91523423  1.59385546 -2.04672855]
+ [-4.10765782  1.51740207 -0.5572445   8.21818142 -4.67065521]]
+
+(3, 5) <class 'tensorflow.python.framework.ops.Tensor'> :
+[[ 4.34288636  0.          0.          0.          0.        ]
+ [ 9.07049557  0.          0.          1.59385546  0.        ]
+ [ 0.          1.51740207  0.          8.21818142  0.        ]]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+tf.nn.relu6(features, name = None)
+== min ( max(features, 0), 6 )
+
+import numpy as np
+import tensorflow as tf
+
+sess = tf.Session()
+bn = np.random.normal(0, 5, [3, 5])
+
+print bn.shape, type(bn), ':'
+print bn
+print
+output = tf.nn.relu6(bn)
+print output.shape, type(output), ':'
+print sess.run(output)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+(3, 5) <type 'numpy.ndarray'> :
+[[ 6.08205437  7.72360999 -1.62220085  5.41621866  5.8087728 ]
+ [-5.07454654  3.85471614  1.44742944  2.77378759  3.61971044]
+ [ 5.43383943  1.9598894  -2.5352505  -1.38550512  3.64028622]]
+
+(3, 5) <class 'tensorflow.python.framework.ops.Tensor'> :
+[[ 6.          6.          0.          5.41621866  5.8087728 ]
+ [ 0.          3.85471614  1.44742944  2.77378759  3.61971044]
+ [ 5.43383943  1.9598894   0.          0.          3.64028622]]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+tf.nn.bias_add(value, bias, name = None)
+== value + bias (bias是一维的)
+
+import numpy as np
+import tensorflow as tf
+
+sess = tf.Session()
+bn = np.random.normal(0, 5, [3, 5])
+
+print bn.shape, type(bn), ':'
+print bn
+print
+output = tf.nn.bias_add(value=bn, bias=np.ones_like(bn[0]))
+print output.shape, type(output), ':'
+print sess.run(output)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+(3, 5) <type 'numpy.ndarray'> :
+[[-7.24470546  1.40561024  2.27976912 -6.22879516  4.98934916]
+ [-9.75160657  6.78796922  0.60843038 -4.94145474 -0.98402315]
+ [-7.02590057  1.98236592  0.85727947  0.08917467 -5.54994355]]
+
+(3, 5) <class 'tensorflow.python.framework.ops.Tensor'> :
+[[-6.24470546  2.40561024  3.27976912 -5.22879516  5.98934916]
+ [-8.75160657  7.78796922  1.60843038 -3.94145474  0.01597685]
+ [-6.02590057  2.98236592  1.85727947  1.08917467 -4.54994355]]
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+
+随机正则化
+tf.nn.dropout(x, keep_prob, noise_shape = None, seed = None, name = None)
+== keep_prob概率 的神经元输出值将被放大到原来的 1/keep_prob 倍，其余神经元的输出置 0
+
+import numpy as np
+import tensorflow as tf
+
+sess = tf.Session()
+bn = np.random.normal(0, 5, [3, 5])
+
+print bn.shape, type(bn), ':'
+print bn
+print
+output = tf.nn.dropout(x=bn, keep_prob=0.5)
+print output.shape, type(output), ':'
+print sess.run(output)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+(3, 5) <type 'numpy.ndarray'> :
+[[ -6.63260663   5.18248388  -2.64777118  -0.98104194  -4.21568201]
+ [  0.94315835   5.73277238  -0.27942206   0.93593509  10.41087634]
+ [  0.18322279   5.72198372   5.00533604  -1.80672579  -2.32201658]]
+
+(3, 5) <class 'tensorflow.python.framework.ops.Tensor'> :
+[[ -0.           0.          -5.29554235  -1.96208389  -0.        ]
+ [  1.88631669   0.          -0.55884411   1.87187017  20.82175267]
+ [  0.          11.44396745   0.          -0.          -0.        ]]

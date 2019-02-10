@@ -1,0 +1,9 @@
+python包安装工具--pip
+作用:管理python的标准第三方库中的软件包
+安装:sudo apt-get install python3-pip
+
+常用命令: 
+    1.安装软件 pip3 install package
+    2.查看当前python软件包 pip3 list
+    3.搜索某个软件包: pip3 search [name]
+    4.查看软件包信息: pip3 show package

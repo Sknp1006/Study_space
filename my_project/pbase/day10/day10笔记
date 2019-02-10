@@ -1,0 +1,306 @@
+day09回顾:
+    函数的参数:
+        实参(给)
+            位置传参
+            序列传参
+            关键字传参
+            字典关键字传参
+        例:
+            fx(1,2,3)
+            fx(*'ABC'))
+            fx(a=1, c=3, b=2)
+            fx(**{'c':3, 'b':2, 'a':1})
+        形参(接收)
+            接收的实参的引用关系(并不会复制对象)绑定关系
+            形参的定义:
+        缺省参数:
+        def fx(a=10, b=20, c=30):
+            pass
+        形参的定义:
+           位置形参
+           *元组形参
+           命名关键字形参
+           **字典形参
+        def f(a, b, *args, c=None, d=None, **kwargs)
+    
+    全局变量 与 局部变量
+    
+day10笔记:
+    globals 与 locals函数
+    globals()  返回当前全局变量作用域内变量的字典
+    locals()   返回当前局部作用域内变量的字典
+    示例:
+        globals_locals.py    
+
+函数变量:
+变量(没有类型)
+对象(int, float, str, list, dict, 函数, 类)
+    函数名是变量,它在创建函数绑定一个函数
+    示例1:
+        def f1():
+            print("f1被调用")
+        f2 = f1
+        f2()
+        f1()
+    示例2:
+        def f1():
+            print("f1")
+        def f2():
+            print("f2")
+        f1, f2 = f2, f1  #f1与f2 的绑定关系互换
+        f1()  
+        #f2
+    
+一个函数可以作为另一个函数的实参进行传递
+    示例见: function_as_args.py
+
+案例:
+    看懂如下代码:
+        def myfun(fn):
+            L = [1, 3, 5, 7, 9]
+            return fn(L)
+        print(myfun(max))
+        print(myfun(min))
+        print(myfun(sum))
+
+函数可以作为另一个函数的返回值:
+    一个函数内部可以用return语句返回另一个函数的引用关系
+示例见:return_function.py
+   
+练习:
+    写一个计算公式的解释执行器,已知有如下一些函数
+    见mycalc.py
+
+def myadd(x, y):
+    return x + y
+def mysub(x, y):
+    return x - y
+def mymul(x, y):
+    return x * y
+# ...
+# 另有一个函数get_func,有一个参数op 代表用给定的字符串
+def get_func(op):
+    if op == '加' or op == '+':
+        # myadd(a, b)
+        return myadd
+    elif op == '减' or op == '-':
+        return mysub
+    elif op == '乘' or op == '*':
+        return mymul
+    #     ...
+    # 此函数在传入字符串"加",或 '+'时,返回myadd函数
+    # 此函数在传入字符串"减",或 '-'时,返回mysub函数
+    #     ...
+# 在主函数中:
+def main():
+    while True:
+        s = input("请输入计算公式:")  #10加20
+        L = s.split(' ')
+        #print(L)
+        a = int(L[0])
+        b = int(L[2])
+        fn = get_func(L[1])
+        print("结果是:", fn(a, b))
+main()
+
+函数的嵌套定义:
+    函数嵌套定义是指一个函数里用def 语句来创建其它函数的情况
+    示例:
+        def fn_outer():
+            print("fn_outer被调用")
+            def fn_inner():
+                print("fn_inner 被调用")
+            print("fn_outer调用结束")
+        fn_outer()
+        print("程序结束")
+
+python的作用域:
+    作用域也叫名字空间,是访问变量时查找变量名的范围空间
+
+python的四个作用域:LEGB
+    作用域                  英文解释                 英文简写
+局部嵌套作用域           locals(function)              L
+外部嵌套作用域           Enclosing function local      E
+函数定义所在模块的作用域   Global(module)                G
+Python内置模块的作用域    Builtin(Python)               B
+
+示例见:
+    namespace.py
+    
+变量名的查找规则:
+    在访问变量时,先查找本地变量,然后是包裹此函数的外部的内部变量,之后是全局变量,最后是内置变量:
+    L-->E-->G-->B
+    在默认情况下,赋值语句只能在当前作用域内创建变量
+
+
+global语句:
+    作用: 
+        告诉解释执行器,global语句声明的一个或多个变量,这些变量的作用域为模块级的作用域,也称为全局作用域
+        全局声明 global 将赋值变量映射到模块文件内部的作用域
+    语法:
+        global 变量名1,变量名2,...
+    示例见:
+        global.py
+    说明:
+        1.全局变量如果在函数内被赋值,则必须经过全局变量声明(否则会被认为是局部变量)
+        2.全局变量在函数内部不经过声明可以直接访问
+        3.不能先声明局部变量,再用global声明为全局变量,此做法不符合规则
+        4.global 变量列表里的变量名不能出现在函数的形参列表里
+
+练习:
+    用全局变量记录一个函数hello被调用的次数,部分代码如下:
+        count = 0
+        def hello(name):
+            print("你好")
+            ...
+        hello('小张')
+        while True:
+            s = input('请输入姓名:')
+            if not s:
+                break
+            hello(s)
+        print("hello函数调用的次数是", count)
+
+nonlocal语句:
+作用:
+    告诉解释执行器, nonlocal声明的变量不是局部变量,也不是全局变量,而是外部嵌套函数的变量
+语法:
+    nonlocl 变量名1,变量名2,...
+示例:
+    nonlocal.py
+说明:
+    1.nonlocal 语句只能在被嵌套函数内部进行使用
+    2.对nonlocal 变量进行赋值将对外部嵌套函数作用域的变量进行操作
+    3.当有两层或两层以上函数嵌套时,访问nonlocal变量只对最近一层的变量进行操作
+    4.nonlocal 语句的变量列表里的变量名,不能出现在此函数的形参列表中
+
+lambda 表达式(又称为匿名函数)
+作用:
+    创建一个匿名函数对象
+语法格式:
+    lambda[函数的形参列表]:表达式
+    注:[]里的内容可以为空
+返回值:
+    函数对象的引用关系
+示例见:
+    lambda.py
+说明:
+    lambda 表达式创建的函数只能包含一条表达式
+    lambda 比函数简单且可以随时创建和销毁,有利于减少程序的耦合度(耦合度为程序模块之间的关联程度)
+
+练习:
+    1.写一个lambda 表达式:
+        fx = lambda n:...
+        此表达式创建一个函数,判断n这个数的2次方+1能否被5整除,
+        如果能返回True,否则返回False
+        如:
+        fx = lambda x: (x**2+1)%5 == 0
+        print(fx(3))  #True
+        print(fx(4))  #false
+    2.写一个lambda 表达式来创建函数,此函数返回两个参数的最大值
+        def mymax(x, y):
+           ...
+
+        #mymax = lambda *args: max(args)
+
+        mymax = lambda :...
+        print(mymax(100, 200))
+        print(mymax('ABC', "123"))
+
+eval() 和 exec函数
+eval 函数:
+    作用:
+        把一个字符串当成一个表达式来执行,返回表达式执行后的结果
+    格式:
+        eval(source, global=None, local=None)
+    参数:
+        source 用于执行表达是字符串
+        global 用于描述source执行的全局变量环境的字典
+        local  用于描述source执行的局部变量环境的字典
+    示例见:
+        eval.py
+
+esec 函数:
+    作用:
+        把一个字符串当成程序来执行
+    格式:
+        exec(source, global=None, local=None)
+    参数:
+        source 用于执行表达是字符串
+        global 用于描述source执行的全局变量环境的字典
+        local  用于描述source执行的全局变量环境的字典
+    示例见:
+        exec.py
+
+练习:
+    1.看懂下面的程序在做什么?
+    def fx(f, x, y):
+        print(f(x, y))
+    fx((lambda a, b: a + b), 100, 200)   #300
+    fx((lambda a, b: a**b), 3, 4)        #81
+    程序写到此时有几个全局变量?              #1个全局变量
+    2.写一个函数mysum(x)来计算:
+     1 + 2 + 3 + 4 +... + x的和,并返回
+     如:
+       print(mysum(100))  #5050
+
+def mysum(x):
+    sum = 0
+    for i in range(x+1):
+        sum += i
+    return sum
+print(mysum(100))
+
+def mysum(n):
+    if n == 1:
+        return 1
+    return n + mysum(n-1)
+print(mysum(100))
+
+
+
+
+    3.写一个函数myfac(n)来计算n!
+     n! = 1*2*3*4*5...*n
+     如:
+         print(myfac(5))   #120
+
+def myfac(n):
+    s = 1
+    for x in range(1,n+1):
+        s *= x
+    return s
+print(myfac(5))
+
+def myfac(n):
+    if n == 1:
+        return 1
+    return n*myfac(n-1)
+
+print(myfac(5))
+
+    4.写一个函数计算 1 + 2**2 + 3**3 + ... +n**n的和
+     注:n给个小点的数
+
+def calc(n):
+    if n == 1:
+        return 1
+    return n**n+calc(n-1)
+print(calc(3))
+
+def fun():
+    return sum(map(lambda x:x**x, ragne(1, n+1)))
+
+
+    5.实现有界面的学生信息管理程序
+     选择菜单如下:
+         +--------------+
+         | 1)添加学生信息 |
+         | 2)显示学生信息 |
+         | 3)删除学生信息 |
+         | 4)修改学生成绩 |
+         | q)退出        |
+         +--------------+
+     学生信息和存储方法与原程序相同:用列表里包含的来存信息
+     要求: 每个功能写一个函数与之相对应
+    

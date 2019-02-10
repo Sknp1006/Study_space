@@ -1,0 +1,421 @@
+day07回顾
+    两个容器
+        tuple(元组)   dict(字典)
+元组的创建:
+    ()  20,  (20,)  (1,2,3)  1,2,3
+    构造函数的方式:tuple()  tuple(iterable)
+
+    运算:
+        + += * *= 
+    元组的比较:
+        同列表的比较完全相同
+        > >= < <= == !=
+    in/ not in 运算
+    索引,切片
+        t[1], t[1:10:2]
+        不支持索引赋值和切片赋值
+    元组的方法:
+        T.index(value[,begin[,end]]))
+        T.count(x)  返回元素的个数
+
+字典 dict
+    可变的,无序的,容器
+    键(key) - 值(value)
+    不可变     任意对象
+    字典的创建方式:
+        字面值 {}, {1:'一',...}
+        构造函数 
+            dict(), dict(iterable), dict(关键字传参)
+        推导式
+            {键表达式:值表达式 for 变量1 in 可迭代对象 if 真值表达式}
+    添加和修改字典的键值对:
+        d[键] = 值表达式
+    删除字典的键:
+        del d[键]
+    查看字典的键对应的值:
+        v = d[键]
+    字典是可迭代对象(可以迭代取出字典的键)
+
+可迭代对象的用处:
+    for 变量 in 可迭代对象:
+        ...
+    推导式中
+    [表达式 for 变量 in 可迭代对象]
+
+in/not in运算
+比较运算 == !=
+函数:
+    len()  max() min(x)  sum(x)  any(x)  all(x)
+字典的方法:
+    D.clear()   清空
+    D.pop(key)     删,并拿出值
+    D.update(d2)
+    D.copy()    浅拷贝
+    D.get(key, default=None)  #D[key]
+    D.keys()   返回可迭代对象
+    D.values() 返回值的可迭代对象
+    D.items()  返回(键值)元组的可迭代对象
+    for k,v in D.items():
+        ...
+
+day08笔记:
+    集合set
+        集合是可变容器
+        集合内的数据对象都是唯一的(不能重复多次)
+        集合是无序的存储结构,集合中的数据没有先后顺序关系
+        集合内的元素必须是不可变对象
+        集合是可迭代对象
+        集合是相当于只有键,没有值的字典(键则是集合的数据)
+
+    集合的创建:
+        set()  创建空集合
+        s = {1,2,3}  创建非空集合的字面值
+    集合的构造函数 set
+        set() 创建一个空集合(注:不能用{}来创建空集合)
+        set(iterable) 用可迭代对象创建一个新的集合对象
+    示例:
+        s = set()  #s绑定一个空集合
+        s = {2,3,5,7}        
+        s = set("ABC")  #s = {'A', 'B', 'C'}
+        s = set({1:'一', 2:'二'})  #s = {1,2}
+        s = set([1, 0, 3.14, None])  #{0, 1, 3.14, None}
+        s = set([True, False, 1, 0, None])  #{False, True, None}
+        s = set(("ABC", "123", 123))  #{123, '123', 'ABC'}
+        s = {True, None, [1,2,3]}  #错的
+        s = {1,2,{1:'one'}}  #字典是可变对象,出错
+        s = {1,2,{3,4},5,6}  #集合是可变对象,出错
+    集合的运算:
+        交集&  并集|  补集-  对称补集^  子集<  超集>
+    & 生成两个集合的交集
+        s1 = {1,2,3}
+        s2 = {2,3,4}
+        s1&s2  #{2,3}
+    | 并集
+        s1 = {1,2,3}
+        s2 = {2,3,4}
+        s1 | s2   #{1,2,3,4}
+    - 补集
+        s1 = {1,2,3}
+        s2 = {2,3,4}
+        s1 - s2  #{1}  在s1,不在s2
+        s2 - s1  #{4}  在s2,不在s1
+    ^ 对称补集
+        s1 = {1,2,3}
+        s2 = {2,3,4}
+        s1 ^ s2  #两个集合的补集的并集
+    > 判断超集
+    < 判断子集
+        s1 = {1,2,3}
+        s2 = {2,3}
+        s1 > s2 #True  s1是s2的超集
+        s2 < s1 #True  s2是s1的子集
+        s1 < s2 #False 
+    == != 集合相同或不相同
+        s1 = {1,2,3}
+        s2 = {3,2,1}
+        s1 == s2 #True
+        s1 != s2 #False
+    其他:
+        <= >= 
+        &= x &= y相当于 x = x & y
+        |= x |= y相当于 x = x | y
+        ^= x ^= y相当于 x = x ^ y
+    in / not in 运算符
+        同列表
+    集合相关的函数:
+        len(x) max(x) min(x) sum(x) any(s) all(x)
+
+练习:
+    经理有:曹操,刘备,孙权
+    技术员有:曹操, 孙权, 张飞,关羽
+    用集合求:
+        1.既是经理也是技术员的人
+        2.是技术员,但不是经理的人
+        3.是经理但不是技术员的人
+        4.张飞是经理吗
+        5.身兼一职的人有谁
+        6.经理和技术员有几人
+
+a = {'曹操','刘备','孙权'}
+b = {'曹操', '孙权', '张飞','关羽'}
+print("1.既是经理也是技术员的人:", a&b)
+print("2.是技术员,但不是经理的人:", b-a)
+print("3.是经理但不是技术员的人:",a-b)
+print("4.张飞是经理吗:", bool('张飞' in a))
+print("5.身兼一职的人有谁:", a^b)
+print("6.经理和技术员有几人:", len(a|b))
+
+集合的方法:
+    自己去看文档
+
+集合推导式:
+    集合推导式是用可迭代对象创建的推导式
+    语法:
+        {表达式 for 变量 in 可迭代对象 [if 真值表达式]}
+        注:[]括号内的部分可以省略
+    示例:
+        L = [1,2,3,5,4,6,7,8]
+        s = {x ** 2 for x in L}
+        print(s)
+    集合推导式支持嵌套
+        嵌套规则与列表推导式完全相同
+
+固定集合 forzenset
+    固定集合是不可变的,无序的,含有唯一元素的集合
+    固定集合就是不可变的集合
+
+    作用:
+        固定集合可以作为字典的键,还可作为集合的值
+    固定集合的创建函数 frozenset
+    frozenset()  创建一个空的固定集合
+    frozenset(iterable)  用可迭代对象创建固定集合
+示例:
+    fz = frozenset()
+    fz = frozenset(range(10))
+固定集合的运算:
+    &  |  -  ^  &=  |=  -=  ^= 
+    in /not in
+    >  >=  <  <=  ==  !=
+    (以上运算等同于set中的用法)
+固定集合的方法:
+    相当于集合的全部方法去掉修改集合的方法
+
+小结:
+数据类型:
+    不可变的数据类型:
+        bool, int, float, complex, str, tuple, frozenset, bytes
+    可变的数据类型
+        list, set, dict, bytearrary
+值:
+    None, False, True...
+运算符:
+    +, -, *, /, //, %, **
+    +=, -=, ...
+    >, >=, <, <=,==, !=
+    is / is not
+    in / not in
+    not, and, or
+    &, |, ^
+    &=, |=, ^=
+    +(正号)  -(负号)
+    [], /, [:], 索引 和 切片
+表达式:
+    1
+    1+2
+    len(L1) + len(L2)
+    条件表达式:
+        x if x > y else y
+    全部的推导式 [x for x in range(10)]
+        列表,字典,集合推导式(三种)
+语句:
+    表达式语句:
+        print("hello")
+        '''abcd'''
+    赋值语句:
+        a = 100
+        a = b = c = 200
+        x, y, z = 100,200,300
+    del 语句:
+    if 语句:
+    while 语句:
+    for 语句:
+    break 语句:
+    continue 语句:
+    pass 语句:
+内建函数:
+    用于容器的函数:
+        len(x)
+        max(x)
+        min(x)
+        sum(x)
+        any(x)
+        all(x)
+    构造函数:
+        int(x)
+        float(x)
+        complex(x)
+        bool(x)
+        str(x)
+        list(x)
+        tuple(x)
+        dict(x)
+        set(x)
+        frozenset(x)
+    数值型函数:print("一共有",peach,"个桃子") 
+
+    2.写程序,添加,删除,查找单词+退出
+
+def Dict():
+    while True:
+        print("1) 添加单词")
+        print("2) 删除单词")
+        print("3) 查找单词")
+        print("4) 退出")
+        tip = input("请输入一个序号:")
+
+        if tip == '1':
+            add_word()
+        elif tip == '1':
+            del_word()
+        elif tip == '1':
+            show_word()
+        elif tip == '1':
+            break
+
+def add_word():
+    while True:
+        word = input("请输入一个单词:")
+        if len(word) == 0:
+            print("输入结束")
+            break
+        else:
+            trans = input("请输入单词的解释:")
+            DICT[word] = trans
+        abs(x)
+        round(x,y)
+        pow(x,y,z=None)
+    字符串相关函数:
+        bin(x)
+        oct(x)
+        hex(x)
+        chr(x)
+        ord(x)
+    可迭代对象相关的函数:
+        range(start, stop, step)
+        reverse(x)
+    输入输出相关函数:
+        input(x)
+        print(...)
+    其他:
+    type(x)
+    id(x)
+    help(x)
+    
+
+函数 function
+    函数是可以重复执行的语句块,可以重复调用
+    函数是面向过程编程的最小单位
+
+作用:
+    1.封装语句块,提高代码的重用性
+    2.定义用户级别的函数
+
+def 语句:
+    作用:
+        创建一个函数,用变量绑定这个函数
+    语法:
+        def 函数名(形参列表):
+        语句块(代码块)
+        A-Za-z0-9
+    说明:
+        1.函数的名字就是语句块的名称
+        2.函数的命名规则与变量名相同(必须为标识符)
+        3.函数名是一个变量(不要轻易对它赋值)
+        4.形参列表是用户自定义的变量名,用来接收调用者传入的参数
+        5.函数有自己的名字空间,在函数外部不能访问函数内部的变量,在函数内部可以访问函数外部的变量
+          但不能用赋值语句修改这些(外部)变量
+        6.函数如果部存入参数,参数列表可以为空
+        7.语句部分不能为空,如果为空需要填充pass语句
+    示例:
+        def.py
+函数调用:
+语法:
+    函数名([实际调用传递参数])
+    注:[]代表内部的内容可省略
+说明:
+    函数如果是一个表达式
+    如果函数的内部没有return语句,则函数执行完毕后返回None
+
+练习:
+    写一个函数myadd,此函数中的参数列表里有x,y
+    此函数打印 x+ y 的和
+
+写一个函数print_even,传入一个参数n代表终止的整数
+(注:不包含n),此函数打印:
+0 2 4 6 8 ...到n为止的全部偶数
+
+表达式执行后能返回一个值
+
+return 语句
+    语法:
+        return [表达式]
+        注:[]代表内部内容可以省略
+    作用:
+        用于函数中,结束当前函数的执行,返回到调用该函数的地方,同时返回一个对象的引用关系
+    说明:
+        return语句后跟的表达式可以省略,省略后相当于返回None
+        如果函数没有return,则在执行完最后一条语句后,默认返回None 
+    示例:return.py
+
+练习:
+    1.写一个函数 mymax,实现返回两个数的最大值
+    2.写一个函数myadd,实现给出两个数,返回这两个数的和
+
+def myadd2(a, b):
+    return a+b
+
+a = int(input("请输入第一个数:"))
+b = int(input("请输入第二个数:"))
+print(a, "+", b, "的和是", myadd2(a, b))
+    
+    3.写一个函数 input_number
+    def input_number():
+        ...
+    此函数用来获取用户循环输入的整数,当输入负数时结束输入
+    将用户输入的数字形成列表的形式返回,再用内建函数max ,min, sum求用户输入的最大值,最小值和
+    L = input_number()
+    print("用户输入的最大值是:", max(L))
+    print("用户输入的最小值是:", min(L))
+    print("用户输入的全部数的和是:", sum(L))
+
+练习:
+    1.写一个函数,get_chinese_char_count,此函数实现的功能是给定一个字符串,返回这个字符串中中文字符的个数
+    def get_chinese_char_count():
+        ...
+    s = input('请输入中英文混合的字符串:')
+    print("您输入的字符串的个数是:", get_chinese_char_count(s))
+    注:中文字符的编码范围是:0x4E00~0x9FA5(包含)
+
+def get_chinese_char_count(n):
+    L = []
+    for key in s:
+        if ord(key) >= 0x4E00 and ord(key) <= 0x9FA5: #判断是否为中文
+            L.append(key)
+    count_number = len(L)
+    return count_number
+s = input('请输入中英文混合的字符串:')
+print("您输入的中文字符串的个数是:", get_chinese_char_count(s))
+
+
+
+    2.定义两个函数:
+        sum(a, b, c)  用于返回三个数的和
+        pow3(x)       用于返回x的三次方
+    用以下函数计算
+         1)计算1的立方 + 2 的立方 + 3 的立方的和
+         2)计算1+2+3的和的立方
+
+def sum(a, b, c):
+    return a+b+c
+def pow3(x):
+    return x**3
+
+print(sum(1,2,3))
+print(pow3(1)+pow3(2)+pow3(3))
+
+    3.编写函数fun,计算
+    Sn = 1 + 1/2 + 1/3 +...+1/n
+
+    def fun(n):
+    ...
+    print(fun(2))
+    print(fun())
+
+def fun(x):
+    Sn = 0
+    for i in range(1,n+1):
+        An = 1/i
+        Sn = An + Sn
+    return Sn
+n = int(input("请输入一个整数:"))
+print("Sn=", fun(n))

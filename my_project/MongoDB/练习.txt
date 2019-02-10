@@ -1,0 +1,54 @@
+练习:
+    1.创建数据库: grade
+        use grade
+    2.在数据库中创建集合class
+        db.createCollection('class')
+    3.在集合中插入若干数据文档,文档结构
+    {name:xxx, age:10, sex:'m', hobby:['draw', 'dance']}
+    年龄7--15岁
+    hobby: 'draw','dance','running','sing','football','basketball','computer'
+    4.查找练习
+        查看班级所有人信息
+        db.class.find().pretty()
+        查看班级中年龄8岁学生的信息
+        db.class.find({age:8}, {_id:0})
+        查看年龄大于12岁学生信息
+        db.class.find({age:{$gt:12}}, {_id:0})
+        查看年龄在8--12岁的学生信息
+        db.class.find({age:{$gt:8,$lt:12}}, {_id:0})
+        查看年龄9岁且喜欢画画的女生
+        db.class.find({$and:[{age:9, 'hobby':'draw'}]}, {_id:0})
+        查看年龄小于8岁或者大于12岁的学生
+        db.class.find({$or:[{age:{$lt:8}}, {age:{$gt:12}}]}, {_id:0})
+        查看年龄9岁或者11岁的学生
+        db.class.find({$or:[{age:9}, {age:11}]}, {_id:0})
+        db.class.find({age:{$in:[9, 11]}}, {_id:0})
+        查找有两项兴趣爱好的学生
+        db.class.find({hobby:{$size:2}}, {_id:0})
+        找到兴趣爱好有计算机的学生
+        db.class.find({'hobby':'computer'}, {_id:0})
+        找到既喜欢画画又喜欢跳舞的学生
+        db.class.find({$and:[{hobby:'draw'},{hobby:'dance'}]}, {_id:0})
+        统计兴趣有三项的学生人数
+        db.class.find({hobby:{$size:3}}, {_id:0}).count()
+        找到本班年龄第二大的学生
+        db.class.find({}, {_id:0}).sort({age:-1})[1]
+        db.class.find({}, {_id:0}).sort({age:-1}).skip(1).limit(1)
+        找到班级中年龄最小的三个男生
+        db.class.find({sex:'m'}, {_id:0}).sort({age:1}).limit(3)
+        查看班级中同学兴趣爱好范围
+        db.class.distinct('hobby')
+        删除所有年龄小于8岁的同学
+        db.class.deleteMany({age:{$lt:8}})
+
+
+db.class.insert({name:'Android', age:15, sex:'m', hobby:['basketball','computer']})
+db.class.insert({name:'Huawei', age:12, sex:'m', hobby:['draw','running','computer']})
+db.class.insert({name:'Xiaomi', age:9, sex:'w', hobby:['draw','football','basketball','computer']})
+db.class.insert({name:'Meizu', age:9, sex:'m', hobby:['draw','computer']})
+db.class.insert({name:'Jd', age:13, sex:'w', hobby:['sing','football','basketball','computer']})
+db.class.insert({name:'Taobao', age:14, sex:'m', hobby:['draw','dance']})
+db.class.insert({name:'Tmooc', age:10, sex:'w', hobby:['draw','dance','running','sing','football','basketball','computer']})
+db.class.insert({name:'Nike', age:9, sex:'w', hobby:['dance','running','football','basketball']})
+db.class.insert({name:'Gucci', age:7, sex:'w', hobby:['draw','dance']})
+db.class.insert({name:'Adidas', age:11, sex:'m', hobby:['running','football','basketball']})
