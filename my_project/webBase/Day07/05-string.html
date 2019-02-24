@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	var s1 = "100";
+	var s2 = "abc";
+	var code1 = s1.charCodeAt(0);
+	var code2 = s2.charCodeAt(0);
+	console.log(code1,code2);
+	var s3 = "张三";
+	console.log(s3.charCodeAt(0));
+	//中文在计算机中以十六进制存储 "张" 24352
+	var code3 = s3.charCodeAt(0);
+	//转十六进制 toString(16)
+	console.log(code3.toString(16));
+	var s4 = "\u5f20";
+	console.log(s4);
+	var s5 = "\u4e00";
+	var s6 = "\u9fa5";
+	console.log(s5,s6);
+
+	var a = 100;
+	var b = "100";
+	var c = true;
+	var d = undefined;
+	var e = null;
+	console.log(a,typeof a);
+	console.log(b,typeof b);
+	console.log(c,typeof (c));
+	console.log(d,typeof (d));
+	console.log(e,typeof (e));
+
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

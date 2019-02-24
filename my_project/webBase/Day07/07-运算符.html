@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	var r1 = 100 + "86";
+	var r2 = "100" - "10";
+	//NaN与任意类型结合结果永远是NaN
+	var r3 = "100a" - "10";//NaN - 10 
+	console.log(r1,r2,r3);
+	var r4 = "10" + true; //"10true"
+	var r5 = "10" - true; //9
+	var r6 = true + false;//1
+	console.log(r4,r5,r6);
+	var r7 = 10 + undefined;
+	var r8 = undefined + undefined;
+	console.log(r7,r8);//NaN
+	console.log(Number(null));
+	var r9 = 10 + null;
+	console.log(r9);
+	
+	//自增,自减运算符
+	var a = 5;
+	a ++; // a = a + 1;
+	++ a;
+	console.log(a);//7
+	var res1 = a++;
+	console.log(res1,a);//7,8
+	var res2 = ++a;
+	console.log(res2,a);//9,9
+	var res3 = a + ++a;
+	console.log(res3,a);//19,10
+	var res4 = ++a + a++;
+	console.log(res4,a);//22,12
+
+
+
+
+	
+
+
+  
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

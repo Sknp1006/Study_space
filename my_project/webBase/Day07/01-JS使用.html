@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script src="index.js">
+  </script>
+  <script>
+		//alert("head中的JS代码");
+		console.log("head中的JS输出");
+		//prompt("请输入姓名");
+		document.write("<h1>动态添加->head</h1>");
+  </script>
+  
+ </head>
+ <body>
+	<button onclick="document.write('元素绑定方式添加')">点击</button>
+	<h1 onclick="console.log('h1被单击');">单击事件</h1>
+	<script>
+		//alert("body末尾的JS代码");
+		document.write("body末尾动态添加");
+	</script>
+ </body>
+</html>

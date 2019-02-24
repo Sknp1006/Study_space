@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <Script>
+	//数据源
+	var arr = ['a','b','c','d','e','A','V','E','G','H',0,1,2,3,4,5,6];
+	//生成四位随机验证
+	var show = "";
+	for(var i = 0;i < 4; i ++){ //循环4次
+		//生成随机下标
+		var index = parseInt(Math.random()*arr.length);
+		show += arr[index];
+	}
+	//提示输入
+	var input = prompt("请输入验证码 :"+show);
+	//验证
+	if(input.toUpperCase() == show.toUpperCase()){
+		alert("输入正确");
+	}else{
+		alert("输入有误");
+	}
+
+
+
+
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

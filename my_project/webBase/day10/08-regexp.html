@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <Script>
+	//创建正则表达式
+	var reg1 = /知乎/g;
+	var reg2 = /\d{6}/;
+	var reg3 = new RegExp("知乎","ig");
+	//对元字符中的\做处理 "\\" 表示 "\"
+	var reg4 = new RegExp("\\d{6}","g");
+	console.log(reg2,reg4);
+
+	var str = "abc123456789";
+	var str2 = "qwe123456";
+	//lastIndex
+	console.log(reg2.lastIndex);
+	//全局修饰下,手动归0
+	//reg2.lastIndex = 0;
+
+	var r1 = reg2.test(str);
+	console.log(r1,reg2.lastIndex);
+
+	//全局修饰下,手动归0
+	//reg2.lastIndex = 0;
+	var r2 = reg2.test(str);
+	console.log(r2);
+
+
+	
+
+
+
+
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

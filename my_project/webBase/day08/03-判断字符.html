@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	var input = prompt("请输入一个字符");
+	//是否是数字
+	var isNum = input >= 0 && input <= 9;
+	console.log(input+"是数字吗?",isNum);
+	//是否是中文
+	var isChn = input >= "\u4e00" && input <= "\u9fa5";
+	console.log(input+"是中文吗?",isChn);
+	//是否是英文
+	var isLowerCase = input >= "a" && input <= "z";
+	var isUpperCase = input >= "A" && input <= "Z";
+	var isEng = isLowerCase || isUpperCase;
+	console.log(input+"是英文吗?",isEng);
+
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

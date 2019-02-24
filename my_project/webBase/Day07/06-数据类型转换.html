@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <Script>
+	var r1 = "100" + 56; //"10056"
+	var r2 = "100" + true; //"100true"
+	var r3 = "100" + undefined;//"100undefined"
+	var r4 = "10" + "20"; //"1020"
+	var r5 = false + "10";//"false10"
+	console.log(r1,r2,r3,r4);
+	var r6 = 100 + true;
+	var r7 = true + true;
+	console.log(r6,r7);
+
+	var a = 100;
+	a = a.toString(); //"100"
+	var b = true;
+	b = b.toString(); //"true"
+	console.log(a,typeof a);
+    console.log(b,typeof b);
+
+	console.log(Number("35.5"));
+	console.log(Number(true));
+	console.log(Number("a12"));
+	console.log(Number("12a"));
+	console.log(Number("abc"));
+
+	console.log(parseInt(35.5));
+	console.log(parseInt("35.5"));
+	console.log(parseInt("12a"));
+	console.log(parseInt("a12"));
+	console.log(parseInt(true));
+	console.log(parseInt("true"));
+
+
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

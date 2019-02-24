@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	var year = prompt("请输入年份");
+	//闰年判断
+	var res = year % 4 == 0 && year % 100 != 0 || year % 400 == 0;
+
+	//year % 400 == 0 || (year % 4 == 0 && year % 100 != 0) 
+	console.log(year+"是闰年吗?",res);
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

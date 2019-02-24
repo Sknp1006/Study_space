@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	//循环录入数据并输出
+	function showData(){
+		var arr = [];
+		do{
+			var input = prompt("请输入");
+			if(input != "exit"){
+				//arr[arr.length] = input;
+				arr.push(input);
+			}
+		}while(input != "exit");
+		
+		return arr;
+	}
+	/*
+	var res = showData();
+	console.log(res);
+	*/
+
+	//进制转换
+	function decode2Bin(){
+		var num = prompt("请输入数字");
+		//除2取余,直至商为0
+		/*
+			6 / 2 = 3
+			3 / 2 = 1
+			1 / 2 = 0
+		*/
+		var arr = [];
+		while(num != 0){
+			//取余
+			var r2 = num % 2;
+			arr.unshift(r2);
+			//对商取整数
+			var r1 = parseInt(num / 2);
+			num = r1;	
+		}
+		console.log(arr);
+	}
+	decode2Bin();
+
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <Script>
+	//属性
+	var arr = [1,2,3,4,5];
+	console.log(arr.length); //5
+	arr.length = 0; //清空数组
+	console.log(arr);
+
+	//方法
+	var arr2 = [10,20,30];
+	//操作末尾元素
+	var newLength = arr2.push("hello","world");
+	console.log(arr2,newLength);
+	var elem = arr2.pop();
+	console.log(arr2,elem);
+	//操作头部元素
+	arr2.unshift("a");
+	arr2.unshift("b"); //["b","a"]
+	var len2 = arr2.unshift(1,2,3);
+	console.log(arr2,len2);
+	var elem2 = arr2.shift();
+	console.log(arr2,elem2);
+
+
+
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	//获取当前的系统时间
+	var date1 = new Date();
+	//创建指定时间的对象
+	var date2 = new Date("2020-01-01 10:10:10");
+	var date3 = new Date("2021/12/12");
+	//参数必须指定年月日,只写时分秒为不可用的日期对象
+	var date4 = new Date("20:12:12");
+	console.log(date1,date2,date3,date4);
+
+	//方法
+	//getFullYear() 获取四位的年
+	console.log(date1.getFullYear());
+	//getMonth() 获取月 返回0~11对应12个月,需要手动+1
+	console.log(date1.getMonth());
+	//getDate() 获取日期
+	console.log(date1.getDate());
+	//getDay() 获取星期 返回0~6对应周日到周六,周日需处理
+	console.log(date1.getDay());
+	console.log(date3.getDay());
+	//getHours()
+	console.log(date1.getHours());
+	//getMinutes()
+	console.log(date1.getMinutes());
+	//getSeconds()
+	console.log(date1.getSeconds());
+	//练习 : 在页面中显示 "今天是xxxx年xx月xx日 星期x"
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

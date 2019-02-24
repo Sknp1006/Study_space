@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	/*
+		图案			行	空格数	星星数	
+			*			1	4		1
+		*	*	*		2	3		3
+	*	*	*	*	*	3	2		5
+						i	5-i		2*i-1   
+
+	*/
+	for(var i = 1; i < 6; i++){ //控制行
+		var show = "";//每行要输出的内容
+		for(var j = 1;j <= 5-i;j++){
+			//循环输出空格数
+			 show += " ";
+		}
+		for(var k = 1; k <= 2*i-1; k++){
+			//循环输出*
+			show += "*";
+		}
+		console.log(show);
+	}
+
+	console.log("---------------");
+	//乘法表
+	for(var i = 1; i < 10; i ++){ //操作数1
+		var show = "";
+		for(var j = 1; j <= i; j++){//操作数2
+			// \t表示制表符
+			show += i + "*" + j + "=" + i*j +"\t";
+		}
+		console.log(show);
+	}
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

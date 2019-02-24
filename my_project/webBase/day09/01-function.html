@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	//函数使用
+	//1. 无参数,无返回值的函数
+	function f1(){
+		console.log("无参数,无返回值的函数");
+	}
+	f1(); //函数调用
+	//2. 有参数,无返回值
+	/*
+	参数为函数体执行所需的数据
+	函数声明时,给出的参数为形式参数
+	函数调用时,列出的参数为实际参数
+	函数调用时,会将实参传递给形参,称为传参
+	*/
+	function f2(a,b){ //多个参数使用逗号隔开
+		//输出平方
+		console.log(a * a,a * b);
+	}
+	f2(12,10); //调用的过程是传参的过程 a = 12;
+
+	//3. 带有返回值的函数
+	/*
+		返回值用于将函数内部的数据传递到外部使用
+		使用return表示
+		外界定义变量接收函数调用的结果(返回值)
+	*/
+	function f3(a,b){
+		var res = a * a;
+		var res2 = a * b;
+		//注意 : return关键字只返回一个值(表达式),对应外界定义变量接收;如果return多个值,外界接收到的永远是最后一个值
+		return res,res2;
+		//注意 : return关键字后面的代码都不执行
+		console.log("函数return后的代码 :",res);
+	}
+	var r1 = f3(13,14); //res2
+	console.log(r1);
+
+	//JS允许形参和实参个数不匹配
+	function f4(a,b){
+		console.log(a,b); //10,undefined
+	}
+	f4(10);
+
+	function f5(a,b){
+		console.log(a,b); //10,20
+		//arguments属性,只能函数体中使用,存储函数调用传递的实际参数
+		console.log(arguments);
+	}
+	f5(10,20,30);
+
+	//匿名函数自执行
+	(function (a){
+		console.log("匿名函数",a);
+	})(10);
+
+	var fn = function (){
+		console.log("变量保存匿名函数");
+	};
+	fn();
+	console.log(fn);
+
+
+
+
+
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

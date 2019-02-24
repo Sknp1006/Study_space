@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	var s1 = "2020-12-12";
+	var r1 = s1.split("-");
+	console.log(r1);
+	console.log(s1.split('a'));
+	console.log(s1.split());
+
+	//分割商品数量和id
+	var str = "101_5&201_3&301_8";
+	var strArr = str.split("&");
+	//["101_5","201_3","301_8"]
+	for(i in strArr){
+		//["101","5"]
+		var arr = strArr[i].split("_");
+		console.log("商品id为:"+arr[0],"商品数量为:"+arr[1]);
+	}
+
+  
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

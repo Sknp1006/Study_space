@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	var r1 = 100 > 10; //true
+	var r2 = 100 > "10"; //true
+	console.log(r2,Number("10"));
+	var r3 = 100 > "10a"; //false
+	console.log(r3,Number("10a"));
+	var r4 = 100 > true; //true
+	var r5 = 100 > undefined;
+	var r6 = 100 > null;
+	console.log(r5,r6);
+
+
+	var r7 = "2" > "10"; //true
+	console.log(r7);
+	var r8 = "a" > "A"; //true
+	var r9 = "张三丰" > "张无忌";
+	console.log(r9);
+
+	var res1 = true > false; //true
+	var res2 = true > "10";//1 > 10 false
+	var res3 = true > undefined;//1 > NaN false
+	var res4 = true > null;//true
+	console.log(res1,res2,res3,res4);
+
+
+
+
+
+
+  
+  
+  </script>
+ </head>
+ <body>
+	
+ </body>
+</html>

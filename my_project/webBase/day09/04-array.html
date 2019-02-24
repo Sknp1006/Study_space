@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	//数组创建
+	var arr1 = []; //字面量创建空数组
+	var arr2 = new Array();//使用new关键字创建空数组对象
+	console.log(arr1,arr2);
+	//创建并添加元素
+	var arr3 = [100,200,"abc",true];
+	var arr4 = new Array(10,20,"A");
+	console.log(arr3,arr4);
+	//特殊情况
+	var arr5 = [10]; //创建长度为1的数组,元素为10
+	var arr6 = new Array(10);//创建长度为10的空数组
+	console.log(arr5,arr6);
+	var arr7 = new Array("10");
+	console.log(arr7);
+
+	//动态操作数组元素:根据下标操作元素
+	arr7[2] = 20; //为下标为2的位置赋值
+	console.log(arr7);
+	console.log(arr7[0]);//访问下标为0的元素
+
+
+  
+  </script>
+ </head>
+ <body>
+	
+ </body>
+</html>

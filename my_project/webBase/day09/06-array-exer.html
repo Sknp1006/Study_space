@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	//1. 循环输入,存储数据
+	function saveData(){
+		var arr = [];
+		do{
+			var input = prompt("请输入数据");
+			if(input != "exit"){
+				//数组长度表示下一个元素的下标
+				arr[arr.length] = input;
+			}
+		}while(input!="exit");
+		console.log(arr);
+	}
+	//saveData();
+
+	//2. 求数组中的最大值
+	function maxNum(){
+		var arr = [10,5,67,234,88,100,-6,-90];
+		//存储最大值
+		var max = arr[0];
+		//遍历数组,求最大值
+		for(var i = 0;i < arr.length;i++){
+			if(arr[i] > max){
+				max = arr[i];//更新最大值
+			}
+		}
+		console.log(max);
+	}
+	//maxNum();
+
+	//3. 比较大小,排序输出
+	function compare(){
+		var arr = [76,128,30]
+		//比较 arr[0] arr[1]
+		if(arr[0] > arr[1]){
+			//从小到大排列,需要互换元素的值
+			arr[0] = arr[0] ^ arr[1];
+			arr[1] = arr[0] ^ arr[1];
+			arr[0] = arr[0] ^ arr[1];
+		}
+		//比较arr[1] arr[2]
+		if(arr[1] > arr[2]){
+			//互换元素的值
+			var a = arr[1];
+			arr[1] = arr[2];
+			arr[2] = a;
+		}
+		//中间位置的元素可能发生变化,再次比较arr[0]arr[1]
+		if(arr[0] > arr[1]){
+			//从小到大排列,需要互换元素的值
+			arr[0] = arr[0] ^ arr[1];
+			arr[1] = arr[0] ^ arr[1];
+			arr[0] = arr[0] ^ arr[1];
+		}
+		console.log(arr);
+	}
+	//compare();
+	
+	//4. 查询数组元素
+	function queryData(){
+		var arr = [13,24,5,67,9,0,5];
+		//保存最终的下标
+		var index = -1;
+		var input = prompt("请输入数据");
+		for(i in arr){
+			if(arr[i] == input){
+				//数据第一次出现时的下标
+				index = i;
+				break;
+			}
+		}
+		console.log(input+"对应的下标为"+index);
+	}
+	queryData();
+
+
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

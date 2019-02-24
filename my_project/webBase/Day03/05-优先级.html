@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <style>
+	p{
+		color:red;
+	}
+	#d1{
+		color:green;
+	}
+	.c1{
+		color:blue;
+	}
+	p.c1{ /*1+10*/
+		color:gray;
+	}
+	div p{ /*1+1*/
+		
+	}
+	div #d1{/*1+100*/
+		color:orange;
+	}
+	#box #d1{/*100+100*/
+		
+	}
+	div p span{
+	
+	}
+	#box p span{
+	}
+  </style>
+ </head>
+ <body>
+	<div id="box">
+		<p class="c1" id="d1"> 
+			段落
+			<span>span</span>
+		</p>
+	</div>
+ </body>
+</html>

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	//生成验证码
+	function createCode(len){ //验证码的位数
+		//数据源
+		var arr = ['a','b','c','d','e','A','V','E','G','H',0,1,2,3,4,5,6];
+		//生成
+		var code = "";
+		for(var i = 0;i < len; i++){
+			var index = parseInt(Math.random()*arr.length);
+			code += arr[index];
+		}
+		return code;
+	}
+
+	//提供并验证
+	function validate(){
+		//生成验证码
+		var code = createCode(6);
+		//提示输入
+		var input = prompt("请输入验证码"+code);
+		//验证
+		if(input.toUpperCase() == code.toUpperCase()){
+			alert("输入正确");
+		}else{
+			alert("输入有误");
+		}
+	}
+  
+  </script>
+ </head>
+ <body>
+	<button onclick="validate();">获取验证码</button>
+ </body>
+</html>

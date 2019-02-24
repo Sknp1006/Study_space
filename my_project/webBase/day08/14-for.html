@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <Script>
+	for(var i = 1;i <= 100;i++){
+		console.log(i);
+	}
+	//接收用户输入,判断是否素数
+	var num = prompt("请输入数字");
+	var isSu = true;
+	//素数:只能被1和自身整除的数
+	for(var j = 2;j < num;j++){
+		if(num % j == 0){
+			isSu = false;
+			//console.log("不是素数");
+			break;
+		}
+	}
+	if(isSu){
+		console.log("是素数");
+	}else{
+		console.log("不是素数");
+	}
+	
+
+	//break continue
+	for(var i = 1; i < 11; i ++){
+		if(i == 3){
+			continue;
+		}
+		console.log("第"+i+"圈");
+	}
+
+
+
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

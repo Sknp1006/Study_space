@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	var arr = [10,20,3,4,5,6,7,"123"];
+	/*
+	数组对象提供一个属性 length,表示数组中元素个数
+	arr.length
+	数组元素的下标范围 0 ~ length-1
+	*/
+	//正序遍历
+	for(var i = 0;i < arr.length;i++){
+		console.log(arr[i]);
+	}
+	//倒序遍历
+	for(var i = arr.length-1; i >=0 ;i--){
+		console.log(arr[i]);
+	}
+	//for-in循环
+	for(index in arr){ //定义变量表示数组每个元素的下标
+		console.log(index,arr[index]);
+	}
+
+
+  
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>

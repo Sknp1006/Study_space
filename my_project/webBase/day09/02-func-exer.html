@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script>
+	//闰年判断的函数
+	function isRun(year){
+		var res = year % 4 == 0 && year % 100 != 0 || year % 400 == 0
+		return res; //true/false
+	}
+	//主函数
+	function caculateDate(){
+
+		//接收用户输入
+		var year = Number(prompt("请输入年"));
+		var month = Number(prompt("请输入月"));
+		var day = Number(prompt("请输入日"));
+		var sum = 0;//总天数
+		
+		//整年天数的累加
+		for(var i = 1990;i < year; i ++){
+			sum += 365;
+			//判断当年是否为闰年
+			var r = isRun(i);
+			if(r){
+				sum += 1;
+			}
+		}
+		//当前年整月天数的累加 1~month-1
+		for(var j = 1; j < month; j++){
+			switch(j){
+				case 1:
+				case 3:
+				case 5:
+				case 7:
+				case 8:
+				case 10:
+					sum += 31;
+					break;
+				case 4:
+				case 6:
+				case 9:
+				case 11:
+					sum += 30;
+					break;
+				case 2:
+					sum += 28;
+					if(isRun(year)){
+						sum += 1;
+					}
+					break; 
+			}
+		}
+		//当前月天数的累加
+		sum += day;
+
+		//对7取余,算星期
+		var week = sum % 7;
+		var show = "";
+		switch(week){
+			case 0 :
+				show = "星期日";
+				break;
+			case 1 :
+				show = "星期一";
+				break;
+			case 2 :
+				show = "星期二";
+				break;
+			case 3 :
+				show = "星期三";
+				break;
+			case 4 :
+				show = "星期四";
+				break;
+			case 5 :
+				show = "星期五";
+				break;
+			case 6 :
+				show = "星期六";
+				break;
+		}
+		console.log(year+"年"+month+"月"+day+"日是"+show);
+		
+	}
+  
+  </script>
+ </head>
+ <body>
+	<button onclick="caculateDate();">日期计算</button>
+ </body>
+</html>

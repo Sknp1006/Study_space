@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <Script>
+	//数组转换字符串
+	var arr = [1,2,3,4,5];
+	console.log(arr.toString());
+	console.log(arr.join());
+	console.log(arr.join('-'));
+	var arr2 = [1,1,0];
+	console.log(arr2.join(""));//取消连接符
+
+	//反转数组元素
+	var r1 = arr.reverse();
+	console.log(r1,arr);
+
+	//排序
+	var arr3 = [5,50,2,12,3,32];
+	console.log(arr3.sort(),arr3);
+	//自定义排序算法
+	function sortASC(a,b){
+		return a-b;
+	}
+	console.log(arr3.sort(sortASC));
+	//自定义降序排列
+	//a,b表示前后两元素
+	console.log(arr3.sort(function (a,b){
+		//返回值大于零,则交换元素的值
+		return b-a;
+	}));
+
+	//遍历
+	arr3.forEach(function (elem,index){
+		console.log(elem,index);
+	});
+
+	//二维数组
+	var arr4 = [[1,2],[3,4],[5,6,7]];
+	for(var i = 0; i < arr4.length; i ++){
+		//获取内层数组
+		var array = arr4[i];
+		//遍历内层数组
+		for(var j = 0; j < array.length; j++){
+			console.log(array[j]);
+		}
+	}
+
+  
+  
+  </script>
+ </head>
+ <body>
+  
+ </body>
+</html>
