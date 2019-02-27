@@ -146,8 +146,6 @@ def spamTest():
 
 
 
-
-
 def calcMostFreq(vocabList, fullText):
     import operator
     freqDict = {}
@@ -156,26 +154,31 @@ def calcMostFreq(vocabList, fullText):
     sortedFreq = sorted(freqDict.items(), key=operator.itemgetter(1), reverse=True)
     return sortedFreq[:30]
 
-
+# 一个源是一类，目前都是两类的分类？？？
 def localWords(feed1, feed0):
+    import jieba
     import feedparser
     docList = []
     classList = []
     fullText = []
     minLen = min(len(feed1['entries']), len(feed0['entries']))
     for i in range(minLen):
-        wordList = textParse(feed1['entries'][i]['summary'])
+        # wordList = textParse(feed1['entries'][i]['summary'])
+        wordList = list(jieba.cut(feed1['entries'][i]['summary'], cut_all=False))
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(1)  # NY is class 1
-        wordList = textParse(feed0['entries'][i]['summary'])
+        # wordList = textParse(feed0['entries'][i]['summary'])
+        wordList = list(jieba.cut(feed0['entries'][i]['summary'], cut_all=False))
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(0)
     vocabList = createVocabList(docList)  # create vocabulary
     top30Words = calcMostFreq(vocabList, fullText)  # remove top 30 words
+
     for pairW in top30Words:
-        if pairW[0] in vocabList: vocabList.remove(pairW[0])
+        if pairW[0] in vocabList:
+            vocabList.remove(pairW[0])
     trainingSet = list(range(2 * minLen))
     testSet = []  # create test set
     for i in range(20):
@@ -237,4 +240,7 @@ if __name__ == "__main__":
     import feedparser
     feed1 = feedparser.parse("http://feed.cnblogs.com/blog/sitehome/rss")
     feed0 = feedparser.parse("http://feed.cnblogs.com/blog/sitehome/rss")
-    localWords(feed1, feed0)
+    vocabList, p0V, p1V = localWords(feed1, feed0)
+    print(vocabList)
+    print(p0V)
+    print(p1V)
