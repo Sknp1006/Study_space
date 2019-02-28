@@ -4,6 +4,8 @@ Created on Oct 19, 2010
 @author: Peter
 '''
 from numpy import *
+import jieba
+import re
 
 
 def loadDataSet():
@@ -19,7 +21,7 @@ def loadDataSet():
 
 # 创建词汇表
 def createVocabList(dataSet):
-    vocabSet = set([])  # create empty set
+    vocabSet = set()  # create empty set
     for document in dataSet:
         # 求集合并集
         vocabSet = vocabSet | set(document)  # union of the two sets
@@ -28,8 +30,11 @@ def createVocabList(dataSet):
 
 # 词表到词向量的转换函数
 # 返回一个包含文本中的词汇在词汇表中对应位置的索引
+# 一次转换一句话
 def setOfWords2Vec(vocabList, inputSet):
+    # 列表和数组的表示方法一样
     returnVec = [0] * len(vocabList)
+    # returnVec = zeros(len(vocabList))
     for word in inputSet:
         if word in vocabList:
             returnVec[vocabList.index(word)] = 1
@@ -37,13 +42,16 @@ def setOfWords2Vec(vocabList, inputSet):
             print("the word: %s is not in my Vocabulary!" % word)
     return returnVec
 
-
+# 输入：训练矩阵(向量形式的文本)，训练种类labels
 def trainNB0(trainMatrix, trainCategory):
     numTrainDocs = len(trainMatrix)
     numWords = len(trainMatrix[0])
+    # 出现负面言论的概率
     pAbusive = sum(trainCategory) / float(numTrainDocs)
     # p0Num = zeros(numWords)
     # p1Num = zeros(numWords)
+
+    # 初始化所有词出现一次
     p0Num = ones(numWords)
     p1Num = ones(numWords)  # change to ones()
     # p0Denom = 0.0
@@ -71,12 +79,14 @@ def trainNB0(trainMatrix, trainCategory):
 
 
 def classifyNB(vec2Classify, p0Vec, p1Vec, pClass1):
+    # 二分类，直接用1-p（0）即可得到p（1）
     p1 = sum(vec2Classify * p1Vec) + log(pClass1)  # element-wise mult
     p0 = sum(vec2Classify * p0Vec) + log(1.0 - pClass1)
     if p1 > p0:
         return 1
     else:
         return 0
+
 
 # 词袋模型
 def bagOfWords2VecMN(vocabList, inputSet):
@@ -88,16 +98,23 @@ def bagOfWords2VecMN(vocabList, inputSet):
 
 
 def testingNB():
+    # 载入训练集
     listOPosts, listClasses = loadDataSet()
+    # 得到词汇表
     myVocabList = createVocabList(listOPosts)
+    # 初始化训练矩阵
     trainMat = []
+    # 生成训练矩阵
     for postinDoc in listOPosts:
         trainMat.append(setOfWords2Vec(myVocabList, postinDoc))
+    # 得到概率
     p0V, p1V, pAb = trainNB0(array(trainMat), array(listClasses))
     testEntry = ['love', 'my', 'dalmation']
+    # 将文本转换为向量
     thisDoc = array(setOfWords2Vec(myVocabList, testEntry))
     print(testEntry, 'classified as: ', classifyNB(thisDoc, p0V, p1V, pAb))
     testEntry = ['stupid', 'garbage']
+    # 将文本转换为向量
     thisDoc = array(setOfWords2Vec(myVocabList, testEntry))
     print(testEntry, 'classified as: ', classifyNB(thisDoc, p0V, p1V, pAb))
 
@@ -154,6 +171,31 @@ def calcMostFreq(vocabList, fullText):
     sortedFreq = sorted(freqDict.items(), key=operator.itemgetter(1), reverse=True)
     return sortedFreq[:30]
 
+
+def jiebaCut(text):
+    r = '[’!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~]+'
+    text = text.strip()
+    text = re.sub(r, '', text)
+    # print(text)
+    # 添加停用词
+    stopwords = [word.split('\n')[0] for word in
+                 open(r'C:\Users\74001\Documents\GitHub\Study_space\机器学习实战\朴素贝叶斯\stopwords_cn.txt', 'r',
+                      encoding='utf8').readlines()]
+    # print(stopwords)
+    # if '很' in stopwords:
+    #     print('hen')
+    # 分词
+    cutText = list(jieba.cut(text, cut_all=False))
+    # print(cutText)
+    final = []
+    for seg in cutText:
+        # print(seg)
+        if seg not in stopwords:
+            final.append(seg)
+    # print(final)
+    # 去除标点
+    return final
+
 # 一个源是一类，目前都是两类的分类？？？
 def localWords(feed1, feed0):
     import jieba
@@ -164,12 +206,12 @@ def localWords(feed1, feed0):
     minLen = min(len(feed1['entries']), len(feed0['entries']))
     for i in range(minLen):
         # wordList = textParse(feed1['entries'][i]['summary'])
-        wordList = list(jieba.cut(feed1['entries'][i]['summary'], cut_all=False))
+        wordList = jiebaCut(feed1['entries'][i]['summary'])
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(1)  # NY is class 1
         # wordList = textParse(feed0['entries'][i]['summary'])
-        wordList = list(jieba.cut(feed0['entries'][i]['summary'], cut_all=False))
+        wordList = jiebaCut(feed0['entries'][i]['summary'])
         docList.append(wordList)
         fullText.extend(wordList)
         classList.append(0)
@@ -224,13 +266,15 @@ if __name__ == "__main__":
     # myVocabList = createVocabList(listOPosts)
     # print(myVocabList)
     # trainMat = []
+    # # 将一句话转成向量添加进trainMat（训练矩阵）
     # for postinDoc in listOPosts:
     #     trainMat.append(setOfWords2Vec(myVocabList, postinDoc))
     #     print(setOfWords2Vec(myVocabList, postinDoc))
     # p0V, p1V, pAb = trainNB0(trainMat, listClasses)
-    # # print(p0V)
-    # # print(p1V)
-    # # print(pAb)
+    # # 按照概率从大到小排序
+    # print(p0V)
+    # print(p1V)
+    # print(pAb)
     # testingNB()
 
     # 垃圾邮件过滤,示例
@@ -238,9 +282,12 @@ if __name__ == "__main__":
 
     # 从个人广告中获取区域倾向
     import feedparser
-    feed1 = feedparser.parse("http://feed.cnblogs.com/blog/sitehome/rss")
-    feed0 = feedparser.parse("http://feed.cnblogs.com/blog/sitehome/rss")
+    feed1 = feedparser.parse("http://feed.cnblogs.com/blog/sitecateogry/108698/rss")
+    feed0 = feedparser.parse("http://feed.cnblogs.com/blog/sitecateogry/108701/rss")
     vocabList, p0V, p1V = localWords(feed1, feed0)
+    getTopWords(feed1, feed0)
+    # print(feed1['entries'][1]['summary'])
+    # print(len(vocabList))
     print(vocabList)
     print(p0V)
     print(p1V)
