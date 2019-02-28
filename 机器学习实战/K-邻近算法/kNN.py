@@ -20,7 +20,7 @@ def classify0(inX, dataSet, labels,  k):
     sqDiffMat = diffMat ** 2
     sqDistances = sqDiffMat.sum(axis=1)
     distances = sqDistances ** 0.5
-    # argsort()存的是从小到大排序后的索引值
+    # argsort()存的是从小到大排序后的索引值,越小距离越近
     sortDistIndicies = distances.argsort()
     classCount = {}
     # 得到前k个点的距离
@@ -110,19 +110,6 @@ def showdatas(datingDataMat, datingLabels):
     plt.show()
 
 
-"""
-函数说明:分类器测试函数
-Parameters:
-	无
-Returns:
-	normDataSet - 归一化后的特征矩阵
-	ranges - 数据范围
-	minVals - 数据最小值
-Modify:
-	2017-03-24
-"""
-
-
 # 归一化函数
 def autoNorm(dataSet):
     # 获得数据的最小值
@@ -166,17 +153,6 @@ def datingClassTest():
         if classifierResult != datingLabels[i]:
             errorCount += 1.0
     print("错误率:%f%%" % (errorCount / float(numTestVecs) * 100))
-
-
-"""
-函数说明:通过输入一个人的三维特征,进行分类输出
-Parameters:
-	无
-Returns:
-	无
-Modify:
-	2017-03-24
-"""
 
 
 def classifyPerson():
@@ -234,17 +210,18 @@ def handwritingClassTest():
         vectorUnderTest = img2vector('.\digits\\testDigits/%s' % fileNameStr)
         classifierResult = classify0(vectorUnderTest, trainingMat, hwLabels, 4)
         print("the classifier came back with: %d, the real answer is: %d" % (classifierResult, classNumStr))
-        if (classifierResult != classNumStr): errorCount += 1.0
+        if (classifierResult != classNumStr):
+            errorCount += 1.0
     print("\nthe total number of errors is: %d" % errorCount)
     print("\nthe total error rate is: %f" % (errorCount / float(mTest)))
 
 
 if __name__ == '__main__':
     # 电影分类
-    # group, labels = createDataSet()
-    # test = [10, 100]
-    # test_class = classify0(test, group, labels, 3)
-    # print(test_class)
+    group, labels = createDataSet()
+    test = [40, 60]
+    test_class = classify0(test, group, labels, 3)
+    print(test_class)
 
     # 将三个不同的表可视化
     # datingDateMat, datingLabels = file2matrix('datingTestSet2.txt')
@@ -253,7 +230,7 @@ if __name__ == '__main__':
     # 测试算法，得到错误率
     # datingClassTest()
 
-    # 完成品，用来判断你是否喜欢他
+    # 完成品，用来判断是否感兴趣
     # classifyPerson()
 
-    handwritingClassTest()
+    # handwritingClassTest()
