@@ -72,6 +72,10 @@ labelMat = mat(classLabels).transpose()
 b = 0
 m, n = shape(dataMatrix)
 alphas = mat(zeros((100, 1)))
-fXi = multiply(alphas, labelMat)
-print(alphas.shape, labelMat.shape)
+fXi = float(multiply(alphas, labelMat).T * (dataMatrix * dataMatrix[1, :].T))
+# print(dataMatrix)
+# print(dataMatrix * dataMatrix[1, :].T)
+
+print((multiply(alphas, labelMat).T).shape)
+print(dataMatrix * dataMatrix[1, :].T)
 print(fXi)
