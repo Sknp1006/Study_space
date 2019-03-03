@@ -46,26 +46,25 @@ def smoSimple(dataMatIn, classLabels, C, toler, maxIter):
             # multiply 矩阵或数组对位相乘，输出形状跟原来的一样
             fXi = float(multiply(alphas, labelMat).T * (dataMatrix * dataMatrix[i, :].T)) + b
             Ei = fXi - float(labelMat[i])  # if checks if an example violates KKT conditions
+            # 条件满足，转化为对偶问题
             if ((labelMat[i] * Ei < -toler) and (alphas[i] < C)) or ((labelMat[i] * Ei > toler) and (alphas[i] > 0)):
                 j = selectJrand(i, m)
                 fXj = float(multiply(alphas, labelMat).T * (dataMatrix * dataMatrix[j, :].T)) + b
                 Ej = fXj - float(labelMat[j])
-                alphaIold = alphas[i].copy()
-                alphaJold = alphas[j].copy()
+                alphaIold = alphas[i].copy();
+                alphaJold = alphas[j].copy();
                 if (labelMat[i] != labelMat[j]):
                     L = max(0, alphas[j] - alphas[i])
                     H = min(C, C + alphas[j] - alphas[i])
                 else:
                     L = max(0, alphas[j] + alphas[i] - C)
                     H = min(C, alphas[j] + alphas[i])
-                if L == H:
-                    print("L==H")
-                    continue
+                if L == H: print("L==H"); continue
                 eta = 2.0 * dataMatrix[i, :] * dataMatrix[j, :].T - dataMatrix[i, :] * dataMatrix[i, :].T - dataMatrix[
-                                                                                        j, :] * dataMatrix[j, :].T
-                if eta >= 0:
-                    print("eta>=0")
-                continue
+                                                                                                            j,
+                                                                                                            :] * dataMatrix[
+                                                                                                                 j, :].T
+                if eta >= 0: print("eta>=0"); continue
                 alphas[j] -= labelMat[j] * (Ei - Ej) / eta
                 alphas[j] = clipAlpha(alphas[j], H, L)
                 if (abs(alphas[j] - alphaJold) < 0.00001): print("j not moving enough"); continue
@@ -178,9 +177,9 @@ def innerL(i, oS):
         oS.alphas[i] += oS.labelMat[j] * oS.labelMat[i] * (alphaJold - oS.alphas[j])  # update i by the same amount as j
         updateEk(oS, i)  # added this for the Ecache                    #the update is in the oppostie direction
         b1 = oS.b - Ei - oS.labelMat[i] * (oS.alphas[i] - alphaIold) * oS.K[i, i] - oS.labelMat[j] * (
-                    oS.alphas[j] - alphaJold) * oS.K[i, j]
+                oS.alphas[j] - alphaJold) * oS.K[i, j]
         b2 = oS.b - Ej - oS.labelMat[i] * (oS.alphas[i] - alphaIold) * oS.K[i, j] - oS.labelMat[j] * (
-                    oS.alphas[j] - alphaJold) * oS.K[j, j]
+                oS.alphas[j] - alphaJold) * oS.K[j, j]
         if (0 < oS.alphas[i]) and (oS.C > oS.alphas[i]):
             oS.b = b1
         elif (0 < oS.alphas[j]) and (oS.C > oS.alphas[j]):
@@ -385,9 +384,9 @@ def innerLK(i, oS):
         oS.alphas[i] += oS.labelMat[j] * oS.labelMat[i] * (alphaJold - oS.alphas[j])  # update i by the same amount as j
         updateEk(oS, i)  # added this for the Ecache                    #the update is in the oppostie direction
         b1 = oS.b - Ei - oS.labelMat[i] * (oS.alphas[i] - alphaIold) * oS.X[i, :] * oS.X[i, :].T - oS.labelMat[j] * (
-                    oS.alphas[j] - alphaJold) * oS.X[i, :] * oS.X[j, :].T
+                oS.alphas[j] - alphaJold) * oS.X[i, :] * oS.X[j, :].T
         b2 = oS.b - Ej - oS.labelMat[i] * (oS.alphas[i] - alphaIold) * oS.X[i, :] * oS.X[j, :].T - oS.labelMat[j] * (
-                    oS.alphas[j] - alphaJold) * oS.X[j, :] * oS.X[j, :].T
+                oS.alphas[j] - alphaJold) * oS.X[j, :] * oS.X[j, :].T
         if (0 < oS.alphas[i]) and (oS.C > oS.alphas[i]):
             oS.b = b1
         elif (0 < oS.alphas[j]) and (oS.C > oS.alphas[j]):
@@ -427,6 +426,15 @@ def smoPK(dataMatIn, classLabels, C, toler, maxIter):  # full Platt SMO
 
 if __name__ == '__main__':
     dataArr, labelArr = loadDataSet('testSet.txt')
-    b, alphas = smoSimple(dataArr, labelArr, 0.6, 0.001, 40)
-    print(b)
-    print(alphas)
+    # 简易版SMO
+    # b, alphas = smoSimple(dataArr, labelArr, 0.6, 0.001, 40)
+    # print(b)
+    # print(alphas)
+    # print(alphas[alphas > 0])
+    # # print(shape(alphas[alphas > 0]))
+    # for i in range(100):
+    #     if alphas[i] > 0.0:
+    #         print(dataArr[i], labelArr[i])
+
+    # 完整版SMO
+
