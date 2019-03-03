@@ -340,3 +340,5 @@ def showDataSet(dataMat, labelMat):
 
 if __name__ == '__main__':
     testRbf()
+    dataArr, labelArr = loadDataSet('testSetRBF.txt')  # 加载训练集
+    showDataSet(dataArr, labelArr)
