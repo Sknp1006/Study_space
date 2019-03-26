@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        h1{
+            color:orange;
+        }
+    </style>
+</head>
+<body>
+    <h1>
+        <a href="/03-request">去往03-request</a>
+    </h1>
+    <h1>uname:{{ uname }}</h1>
+    <h1>这是01-parent.html中的头部内容</h1>
+    <h1>
+        {% block content %}
+        这是父母版中允许被修改的内容
+        {% endblock %}
+    </h1>
+    <h1>这是01-parent.html中的尾部内容</h1>
+</body>
+</html>

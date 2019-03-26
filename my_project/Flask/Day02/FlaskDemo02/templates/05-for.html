@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    {% for name in list %}
+        <!--
+            第一个输出的人的背景颜色为　红色(red)
+            最后一个输出的人的背景颜色为　粉色(pink)
+            其他所有人的背景颜色为　黄色(yellow)
+         -->
+        {#
+        <h2
+           {% if loop.first %}
+                style="background:red"
+           {% elif loop.last %}
+                style="background:pink"
+           {% else %}
+                style="background:yellow"
+           {% endif %}
+        >
+            第{{ loop.index }}用户的姓名:{{ name }}
+            <br>
+            是否为第一次循环:{{ loop.first }}
+            <br>
+            是否为最后一次循环:{{ loop.last }}
+        </h2>
+        #}
+
+        <h2 style="background:
+           {% if loop.first %}
+                red;
+           {% elif loop.last %}
+                pink;
+           {% else %}
+                yellow;
+           {% endif %}
+        ">
+            第{{ loop.index }}用户的姓名:{{ name }}
+            <br>
+            是否为第一次循环:{{ loop.first }}
+            <br>
+            是否为最后一次循环:{{ loop.last }}
+        </h2>
+    {% endfor %}
+</body>
+</html>

@@ -1,0 +1,209 @@
+模板
+	1.配置
+		项目目录中创建一个 templates 子目录
+	2.显示模板
+		from flask import render_template
+		return render_template('xxx.html')
+	3.语法
+		1.变量
+			显示在模板中的数据就是变量
+			在视图中:
+				return render_template('xxx.html',n1=v1,n2=v2)
+				return render_template('xxx.html',params=locals())
+			在模板中:
+				{{变量名}}
+		2.过滤器
+			对变量进行过滤修改后再输出
+			语法:{{变量|过滤器()}}
+				{{变量|default('')}}
+				{{变量|truncate(200)}}
+				... ...
+		3.标签
+			1.for
+				{% for 变量 in 可迭代元素 %}
+				{% endfor %}
+
+				内置变量:loop
+					loop.index  : 当前循环的次数
+					loop.index0 : 当前循环的下标
+					loop.first  : 记录是否为第一次循环
+					loop.last   : 记录时否为最后一次循环
+			2.if
+				1. if
+					{% if 条件 %}
+					{% endif %}
+				2. if .. else
+					{% if 条件 %}
+		
+					{% else %}
+
+					{% endif %}
+				3. elif
+					{% if 条件 %}
+					
+					{% elif 条件%}
+
+					{% else %}
+
+					{% endif %}
+		4.宏
+			{% macro 名称(参数) %}
+			{% endmacro %}
+
+
+			{{名称(参数)}}
+
+			独立文件中声明宏:
+			macro.html
+				该文件中声明所有的宏
+
+			在使用的模板中
+			{% import 'macro.html' as macros %}
+			{{macros.名称()}}
+	4.静态文件
+		1.所有的静态文件必须放在 static 目录中
+		2.使用静态文件时必须通过 /static/xxx/xxx
+=================================================
+1.模板
+	1.模板的继承
+		1.什么是模板的继承
+			模板的继承类似于类的继承
+			如果一个模板中的内容与另一个模板相似的话,则可以使用继承的方式简化模板的开发
+		2.语法
+			1.父模板文件
+				定义哪些内容在子模板中是可以被重写的
+				{% block 块名 %}
+					该块内容在父模板中是可以正常显示的
+				{% endblock %}
+				block:
+					1.在父模板中正常显示,无任何影响
+					2.在子模板中可以被重写,如果不重写则按照父模板中的效果进行显示
+			2.子模板文件
+				1.需要指定继承自哪个模板
+					{% extends '父模板名称' %}
+				2.重写父模板中指定的内容
+					{% block 块名 %}
+						此处编写的内容会覆盖掉父模板中的同名block
+					{% endblock %}
+
+			练习:
+				完成Blog的 index.html 和 list.html 的继承
+				list.html 继承自 index.html
+				(上课时间 : 10:50)
+2.修改配置
+	1.构建Flask应用时指定配置信息
+		app = Flask(
+			__name__,
+			template_folder="muban",
+			static_url_path="/xxx",
+			static_folder="xxx"
+		)
+		1.template_folder 
+			指定保存模板的文件夹名称
+		2.static_url_path
+			指定访问静态文件的路径
+		3.static_folder
+			指定保存静态文件的文件夹名称
+	2.启动程序时指定的运行配置
+		app.run(
+			debug=True,
+			port=5555,
+			host='0.0.0.0'
+		)
+		port : 指定端口号
+		host : 
+			用于指定访问到本项目的IP地址
+			0.0.0.0 : 任何能够表示该机器的地址都能访问到当前项目,并且允许在局域网内访问,局域网内其他机器访问的话需要使用 ip 地址
+3.请求 - request
+	1.HTTP协议
+		1.作用
+			规范了数据是如何打包以及传递的
+		2.两大核心内容
+			1.请求消息
+				由客户端(浏览器)带给服务器端的数据
+				由三部分组成
+					1.请求起始行
+						GET / HTTP/1.1
+						1.请求方式   - GET
+						2.请求路径   - /
+						3.协议及版本 - HTTP/1.1
+					2.请求消息头
+						所有以 key:value存在的内容都是消息头
+						每个消息头都是要传递给服务器的信息
+					3.请求主体
+						要传递给服务器的一些请求数据
+						只有post 和 put 才有请求主体
+			2.响应消息
+				由服务器端带给客户端的数据
+				1.响应起始行
+					HTTP/1.1 200 OK
+					1.协议以及版本 - HTTP/1.1
+					2.响应状态码   - 200
+					3.原因短句     - OK
+				2.响应消息头
+					以 key:value 的格式存在
+					服务器要传递给浏览器的信息
+				3.响应主体
+					服务器端响应回来的数据
+	2.请求对象 - request
+		1.什么是请求对象
+			请求对象中会封装所有与请求相关的信息 
+			如:请求数据,请求地址,消息头... ...
+		2.语法
+			from flask import request
+			允许在 视图处理函数中 使用 request 
+		3.request 中的常用成员
+			1.scheme : 获取请求协议
+			2.method : 获取请求方式
+			3.args : 获取使用get方式请求提交的数据
+			4.form : 获取使用post方式请求提交的数据
+			5.cookies : 获取cookies的信息
+			6.files : 获取上传的文件们
+			7.path : 获取请求的资源路径(无参数)
+			8.full_path : 获取请求的资源路径(有参数)
+			9.url : 获取完整的请求地址,从协议处开始
+			10.headers : 获取所有的请求消息头(字典类型)
+			(上课时间 : 15:38 )
+	3.获取请求提交的数据
+		1.get 请求方式的数据获取
+			1.get请求方式场合
+				1.表单中使用get请求方式
+					<form method='get' action='xxx'>
+						姓名:<input name="uname">
+						<input type="submit">
+					</form>
+				2.请求地址能够体现在地址栏上的操作
+					<a href="/xxx?name=val1&name=val">xx</a>
+					window.location.href="/xx?name=val";
+			2.获取get请求提交的数据
+				使用 request.args 获取所有的请求数据
+				request.args 允许当成字典的方式操作
+					request.args['name']
+					request.args.get('name')
+					request.args.getlist('name')
+						复选框,滚动列表 都可以使用 
+		2.post 请求方式的数据获取
+			1.post请求方式场合
+				<form method="post">
+				</form>
+			2.获取post请求提交的数据
+				通过 request.form 获取提交的数据
+					request.form['name']
+					request.form.get('name')
+					request.form.getlist('name')
+
+		3.通过 request.method 分析用户的请求意图
+			1.如果是 GET 请求的话
+				则给用户看响应的模板页面
+			2.如果是 POST 请求的话
+				则接受用户请求提交的数据
+
+		作业:
+			完善Blog登录和注册
+			1.访问路径 127.0.0.1:5000/login
+				1.处理静态文件
+				2.判断请求方式
+					1.如果是get请求,则渲染login.html模板
+					2.如果是post请求,则接收请求提交的数据并输出在网页上
+			2.访问路径 127.0.0.1:5000/register
+				效果同上 (渲染register.html模板)
