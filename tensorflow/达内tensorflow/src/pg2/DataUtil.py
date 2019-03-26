@@ -43,5 +43,5 @@ def plotData(imgs, cls, pred=None):
 
 
 mnist = loadData('../../dataset')
-plotData(mnist.train.images[:9], mnist.train.cls[:9])
+# plotData(mnist.train.images[:9], mnist.train.cls[:9])
 # print(mnist)
