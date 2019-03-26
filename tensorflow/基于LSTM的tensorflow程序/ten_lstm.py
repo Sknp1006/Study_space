@@ -8,8 +8,8 @@ import os
 import traceback
 
 real_dir_path = os.path.split(os.path.realpath(__file__))[0]
-pos_file = os.path.join(real_dir_path, 'data/pos_bak.txt')
-neg_file = os.path.join(real_dir_path, 'data/neg_bak.txt')
+pos_file = os.path.join(real_dir_path, 'dataset/pos_bak.txt')
+neg_file = os.path.join(real_dir_path, 'dataset/neg_bak.txt')
 
 #使用 和词性标注
 from pyltp import Segmentor, Postagger
